@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <!-- SEO: ubah judul & deskripsi di bawah agar sesuai (mesin pencari membacanya sebelum JavaScript) -->
+  <title>Portofolio</title>
+  <meta name="description" content="Portofolio profesional: profil, keahlian, proyek terpilih, dan kontak.">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Portofolio">
+  <meta property="og:description" content="Portofolio profesional: profil, keahlian, proyek terpilih, dan kontak.">
+  <meta name="theme-color" content="#FDF8F0">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='18' fill='%230B1F3A'/%3E%3Cpath d='M18 44c8-2 14-10 16-22 2 9 6 16 12 20' fill='none' stroke='%23FFC300' stroke-width='6' stroke-linecap='round'/%3E%3C/svg%3E">
+
+  <!-- Sambungan dibuka lebih awal ke server Google (hemat ±100–300 ms) -->
+  <link rel="preconnect" href="https://script.google.com" crossorigin>
+  <link rel="preconnect" href="https://script.googleusercontent.com" crossorigin>
+  <link rel="dns-prefetch" href="https://lh3.googleusercontent.com">
+  <!-- Font di-host sendiri (tanpa Google Fonts) → teks tampil tanpa menunggu server lain -->
+  <link rel="preload" href="fonts/pjs-400.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="fonts/pjs-800.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="fonts/bi.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="css/style.css">
+
+  <script src="js/config.js"></script>
+  <script>
+  /* Mulai ambil data SEDINI mungkin — berjalan paralel dengan unduhan CSS & JS. */
+  (function () {
+    var C = window.PF_CONFIG || {}, u = String(C.GAS_URL || ''), c = null;
+    try { c = JSON.parse(localStorage.getItem('pf2:pub') || 'null'); } catch (e) { c = null; }
+    if (!(c && c.data && c.h)) c = null;
+    window.__PF_CACHE = c;
+    function get(url, ms, opt) {
+      return new Promise(function (ok, no) {
+        var t = setTimeout(function () { no(new Error('timeout')); }, ms);
+        fetch(url, opt).then(function (r) { if (!r.ok) throw new Error('HTTP ' + r.status); return r.json(); })
+          .then(function (j) { clearTimeout(t); ok(j); }, function (e) { clearTimeout(t); no(e); });
+      });
+    }
+    var ready = /^https:\/\/script\.google\.com\/macros\/.+\/exec$/.test(u) && u.indexOf('XXXX') < 0;
+    if (ready && !(c && Date.now() - (c.t || 0) < 30000)) {
+      window.__PF_GAS = get(u + '?action=public' + (c ? '&h=' + encodeURIComponent(c.h) : ''), 20000, { credentials: 'omit', cache: 'no-store', redirect: 'follow' });
+      window.__PF_GAS['catch'](function () {});
+    }
+    // Mode Turbo: pengunjung pertama memuat snapshot dari CDN GitHub (tanpa menunggu server Google)
+    if (ready && !c && C.TURBO) {
+      var T = typeof C.TURBO === 'string' ? C.TURBO : '', m = /^([a-z0-9-]+)\.github\.io$/i.exec(location.hostname);
+      if (!T && m) {
+        var seg = location.pathname.split('/').filter(Boolean);
+        var repo = seg.length && !/\.html?$/i.test(seg[0]) ? seg[0] : m[1] + '.github.io';
+        T = 'https://raw.githubusercontent.com/' + m[1] + '/' + repo + '/' + (C.TURBO_BRANCH || 'turbo-data') + '/content.json';
+      }
+      if (/^https:\/\//.test(T)) { window.__PF_TURBO = get(T, 8000, { credentials: 'omit' }); window.__PF_TURBO['catch'](function () {}); }
+    }
+    if (c && c.data.settings && /^#[0-9a-f]{6}$/i.test(c.data.settings.warna_utama || '')) {
+      document.documentElement.style.setProperty('--primary', c.data.settings.warna_utama);
+    }
+  })();
+  </script>
+  <script src="js/core.js" defer></script>
+  <script src="js/app.js" defer></script>
+</head>
+<body class="is-loading">
+  <a class="skip-link" href="#tentang" data-go="tentang">Lewati ke konten utama</a>
+
+  <!-- Halaman status: perawatan / gagal memuat / belum dikonfigurasi -->
+  <div class="state-page" id="statePage" hidden></div>
+
+  <!-- ═══════════ SITUS PUBLIK (satu halaman) ═══════════ -->
+  <div id="site">
+    <!-- F1: Info bar atas -->
+    <div class="infobar" id="infobar" role="complementary" aria-label="Info kontak singkat"></div>
+
+    <!-- F2: Navigasi sticky -->
+    <header class="nav" id="nav">
+      <div class="container">
+        <button class="brand" id="brand" data-go="beranda" aria-label="Kembali ke atas"><span class="sk" style="width:44px;height:44px;border-radius:50%"></span><span class="sk" style="width:120px;height:16px"></span></button>
+        <nav class="nav-links" id="navLinks" aria-label="Navigasi utama"></nav>
+        <button class="btn btn-yellow btn-sm nav-cta" data-go="kontak" data-cta="Hubungi Saya">
+          Hubungi Saya <i class="bi bi-arrow-right" aria-hidden="true"></i>
+        </button>
+        <button class="icon-btn nav-burger" id="burger" aria-label="Buka menu" aria-expanded="false" aria-controls="mmenu">
+          <i class="bi bi-list" aria-hidden="true" style="font-size:22px"></i>
+        </button>
+      </div>
+    </header>
+
+    <main id="main">
+      <!-- F3: Hero -->
+      <section class="hero" id="beranda" aria-label="Beranda"><div class="container" id="heroBox">
+        <div class="hero-text" aria-hidden="true">
+          <span class="sk" style="width:210px;height:32px;border-radius:999px"></span>
+          <span class="sk sk-h"></span><span class="sk sk-h" style="width:72%"></span>
+          <span class="sk sk-t"></span><span class="sk sk-t" style="width:88%"></span><span class="sk sk-t" style="width:60%"></span>
+          <span class="sk-row"><span class="sk" style="width:190px;height:52px;border-radius:999px"></span><span class="sk" style="width:150px;height:52px;border-radius:999px"></span></span>
+        </div>
+        <div class="hero-media" aria-hidden="true"><div class="hero-blob"></div><div class="hero-photo sk-photo"></div></div>
+      </div></section>
+
+      <!-- F4: Tentang -->
+      <section class="bg-white" id="tentang" aria-labelledby="h-tentang">
+        <div class="container">
+          <div class="sec-head reveal">
+            <span class="label-pill">Tentang</span>
+            <h2 id="h-tentang">Tentang <span class="accent">Saya</span> &amp; Prinsip Kerja</h2>
+            <p id="subTentang"></p>
+          </div>
+          <div class="about-grid" id="aboutBox"><div class="card sk-card" aria-hidden="true" style="min-height:260px"><span class="sk sk-t" style="width:50%"></span><span class="sk sk-t"></span><span class="sk sk-t" style="width:80%"></span></div><div class="card sk-card" aria-hidden="true" style="min-height:260px"><span class="sk sk-t" style="width:40%"></span><span class="sk sk-t"></span></div></div>
+        </div>
+      </section>
+
+      <!-- F5: Keahlian -->
+      <section class="bg-sky" id="keahlian" aria-labelledby="h-keahlian">
+        <div class="container">
+          <div class="sec-head reveal">
+            <span class="label-pill" style="background:#fff">Keahlian</span>
+            <h2 id="h-keahlian">Keahlian <span class="accent">Saya</span></h2>
+            <p id="subKeahlian"></p>
+          </div>
+          <div class="skills-filter reveal"><div class="seg" id="skillFilter" role="group" aria-label="Filter kategori keahlian"></div></div>
+          <div class="skills-grid" id="skillsBox"><div class="card sk-card" aria-hidden="true"><span class="sk" style="width:48px;height:48px;border-radius:14px"></span><span class="sk sk-t" style="width:70%;margin-top:18px"></span><span class="sk sk-t" style="width:90%"></span><span class="sk" style="height:8px;margin-top:16px"></span></div><div class="card sk-card" aria-hidden="true"><span class="sk" style="width:48px;height:48px;border-radius:14px"></span><span class="sk sk-t" style="width:70%;margin-top:18px"></span><span class="sk sk-t" style="width:90%"></span><span class="sk" style="height:8px;margin-top:16px"></span></div><div class="card sk-card" aria-hidden="true"><span class="sk" style="width:48px;height:48px;border-radius:14px"></span><span class="sk sk-t" style="width:70%;margin-top:18px"></span><span class="sk sk-t" style="width:90%"></span><span class="sk" style="height:8px;margin-top:16px"></span></div><div class="card sk-card" aria-hidden="true"><span class="sk" style="width:48px;height:48px;border-radius:14px"></span><span class="sk sk-t" style="width:70%;margin-top:18px"></span><span class="sk sk-t" style="width:90%"></span><span class="sk" style="height:8px;margin-top:16px"></span></div></div>
+        </div>
+      </section>
+
+      <!-- F6: Portofolio -->
+      <section class="bg-white" id="portofolio" aria-labelledby="h-portofolio">
+        <div class="container">
+          <div class="port-head reveal">
+            <div>
+              <span class="label-pill">Portofolio</span>
+              <h2 class="sec-title" id="h-portofolio" style="margin-top:14px">Hasil Karya <span class="accent">Terbaru</span></h2>
+              <p class="sec-sub" id="subPortofolio"></p>
+            </div>
+            <div class="port-tools">
+              <div class="seg" id="projFilter" role="group" aria-label="Filter kategori proyek"></div>
+              <div class="port-arrows">
+                <button class="icon-btn" id="projPrev" aria-label="Proyek sebelumnya"><i class="bi bi-arrow-left" aria-hidden="true"></i></button>
+                <button class="icon-btn dark" id="projNext" aria-label="Proyek berikutnya"><i class="bi bi-arrow-right" aria-hidden="true"></i></button>
+              </div>
+            </div>
+          </div>
+          <div class="proj-grid" id="projBox" aria-live="polite"><div class="card sk-card sk-proj" aria-hidden="true"><span class="sk sk-cover"></span><span class="sk sk-t" style="width:65%;margin:18px 20px 0"></span><span class="sk sk-t" style="width:85%;margin:10px 20px 22px"></span></div><div class="card sk-card sk-proj" aria-hidden="true"><span class="sk sk-cover"></span><span class="sk sk-t" style="width:65%;margin:18px 20px 0"></span><span class="sk sk-t" style="width:85%;margin:10px 20px 22px"></span></div><div class="card sk-card sk-proj" aria-hidden="true"><span class="sk sk-cover"></span><span class="sk sk-t" style="width:65%;margin:18px 20px 0"></span><span class="sk sk-t" style="width:85%;margin:10px 20px 22px"></span></div></div>
+          <div class="dots" id="projDots" role="group" aria-label="Halaman proyek"></div>
+        </div>
+      </section>
+
+      <!-- F7: Testimoni (opsional, tampil jika ada data aktif) -->
+      <section class="bg-cream" id="testimoni" aria-labelledby="h-testimoni" hidden>
+        <div class="container">
+          <div class="sec-head reveal">
+            <span class="label-pill" style="background:#fff">Testimoni</span>
+            <h2 id="h-testimoni">Kata <span class="accent">Mereka</span></h2>
+            <p id="subTestimoni"></p>
+          </div>
+          <div class="testi-track" id="testiBox" tabindex="0" aria-label="Daftar testimoni, geser untuk melihat lainnya"></div>
+          <div class="testi-nav" id="testiNav">
+            <button class="icon-btn" id="testiPrev" aria-label="Testimoni sebelumnya"><i class="bi bi-arrow-left" aria-hidden="true"></i></button>
+            <button class="icon-btn dark" id="testiNext" aria-label="Testimoni berikutnya"><i class="bi bi-arrow-right" aria-hidden="true"></i></button>
+          </div>
+        </div>
+      </section>
+
+      <!-- F8: Kontak -->
+      <section class="ribbon" id="kontak" aria-labelledby="h-kontak">
+        <div class="container">
+          <div>
+            <h2 id="h-kontak">Punya Proyek atau Peluang Kerja Sama?</h2>
+            <p id="subKontak"></p>
+          </div>
+          <button class="btn btn-yellow" data-focus-form data-cta="Kirim Pesan (pita)">Kirim Pesan <i class="bi bi-chat-square-text" aria-hidden="true"></i></button>
+        </div>
+      </section>
+      <section class="contact" aria-label="Formulir kontak">
+        <div class="container contact-grid">
+          <div class="card form-card reveal" id="formCard">
+            <h3>Kirim Pesan Langsung</h3>
+            <p>Isi formulir di bawah, pesan akan langsung masuk ke kotak masuk saya.</p>
+            <form id="contactForm" novalidate>
+              <div class="field" data-f="nama">
+                <label for="fNama">Nama Lengkap <span class="req" aria-hidden="true">*</span></label>
+                <input class="input" id="fNama" name="nama" type="text" autocomplete="name" maxlength="100" placeholder="Contoh: Raden Saleh" required>
+                <span class="msg" role="alert"><i class="bi bi-exclamation-circle" aria-hidden="true"></i><span></span></span>
+              </div>
+              <div class="field" data-f="email">
+                <label for="fEmail">Alamat Email <span class="req" aria-hidden="true">*</span></label>
+                <input class="input" id="fEmail" name="email" type="email" autocomplete="email" inputmode="email" maxlength="150" placeholder="nama@perusahaan.com" required>
+                <span class="msg" role="alert"><i class="bi bi-exclamation-circle" aria-hidden="true"></i><span></span></span>
+              </div>
+              <div class="field" data-f="pesan">
+                <label for="fPesan">Pesan Anda <span class="req" aria-hidden="true">*</span></label>
+                <textarea class="input" id="fPesan" name="pesan" rows="5" maxlength="1200" placeholder="Jelaskan kebutuhan proyek, timeline perkiraan, atau tautan pendukung." required aria-describedby="fCount"></textarea>
+                <div class="field-foot">
+                  <span class="msg" role="alert"><i class="bi bi-exclamation-circle" aria-hidden="true"></i><span></span></span>
+                  <span class="counter tnum" id="fCount">0/1.000</span>
+                </div>
+              </div>
+              <!-- Honeypot anti-spam: tersembunyi dari manusia -->
+              <div class="hp" aria-hidden="true">
+                <label for="fWeb">Website</label>
+                <input id="fWeb" name="website" type="text" tabindex="-1" autocomplete="off">
+              </div>
+              <button type="submit" class="btn btn-primary" id="fSubmit">Kirim Pesan Sekarang <i class="bi bi-send" aria-hidden="true"></i></button>
+              <div class="form-note"><i class="bi bi-shield-check" aria-hidden="true"></i> Dilindungi filter spam otomatis (maksimal 5 pesan per jam).</div>
+            </form>
+            <div class="form-success" role="status" aria-live="polite">
+              <div class="big"><i class="bi bi-check-lg" aria-hidden="true"></i></div>
+              <h3>Pesan terkirim!</h3>
+              <p id="sentInfo">Terima kasih, saya akan membalas secepatnya.</p>
+              <button class="btn btn-ghost" id="sendAnother">Kirim pesan lain</button>
+            </div>
+          </div>
+          <div class="card ch-card reveal" style="--d:.08s">
+            <h3>Saluran Langsung</h3>
+            <div class="ch-list" id="channelBox"></div>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <!-- F9: Footer -->
+    <footer class="footer" id="footer"></footer>
+  </div>
+
+  <!-- Menu ponsel -->
+  <div class="mmenu" id="mmenu" role="dialog" aria-modal="true" aria-label="Menu navigasi">
+    <div class="mmenu-top">
+      <span class="brand" id="mbrand"></span>
+      <button class="icon-btn" id="mclose" aria-label="Tutup menu"><i class="bi bi-x-lg" aria-hidden="true"></i></button>
+    </div>
+    <nav id="mlinks" aria-label="Navigasi ponsel"></nav>
+    <button class="btn btn-yellow" data-go="kontak" data-cta="Hubungi Saya (menu)">Hubungi Saya <i class="bi bi-arrow-right" aria-hidden="true"></i></button>
+  </div>
+
+  <!-- Modal video perkenalan -->
+  <div class="modal" id="videoModal" role="dialog" aria-modal="true" aria-label="Video perkenalan">
+    <div class="modal-box">
+      <div class="modal-head"><span>Video Perkenalan</span><button class="icon-btn" data-close-modal aria-label="Tutup video"><i class="bi bi-x-lg" aria-hidden="true"></i></button></div>
+      <div class="video-wrap" id="videoWrap"></div>
+    </div>
+  </div>
+
+  <div class="toasts" id="toasts" aria-live="polite" aria-atomic="false"></div>
+
+
+  <noscript><div class="state-page"><div class="card"><h1>JavaScript dinonaktifkan</h1><p>Aktifkan JavaScript di browser untuk melihat portofolio ini.</p></div></div></noscript>
+</body>
+</html>
