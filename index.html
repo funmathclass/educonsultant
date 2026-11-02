@@ -1,14 +1,14 @@
 <!DOCTYPE html>
-<html lang="id">
+<html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
   <!-- SEO: ubah judul & deskripsi di bawah agar sesuai (mesin pencari membacanya sebelum JavaScript) -->
-  <title>Portofolio</title>
-  <meta name="description" content="Portofolio profesional: profil, keahlian, proyek terpilih, dan kontak.">
+  <title>Education Consultant</title>
+  <meta name="description" content="Education consultant: quality assurance, teacher development, fun mathematics training, and Cambridge exam support.">
   <meta property="og:type" content="website">
-  <meta property="og:title" content="Portofolio">
-  <meta property="og:description" content="Portofolio profesional: profil, keahlian, proyek terpilih, dan kontak.">
+  <meta property="og:title" content="Education Consultant">
+  <meta property="og:description" content="Education consultant: quality assurance, teacher development, fun mathematics training, and Cambridge exam support.">
   <meta name="theme-color" content="#FDF8F0">
   <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='18' fill='%230B1F3A'/%3E%3Cpath d='M18 44c8-2 14-10 16-22 2 9 6 16 12 20' fill='none' stroke='%23FFC300' stroke-width='6' stroke-linecap='round'/%3E%3C/svg%3E">
 
@@ -61,7 +61,7 @@
   <script src="js/app.js" defer></script>
 </head>
 <body class="is-loading">
-  <a class="skip-link" href="#tentang" data-go="tentang">Lewati ke konten utama</a>
+  <a class="skip-link" href="#tentang" data-go="tentang">Skip to main content</a>
 
   <!-- Halaman status: perawatan / gagal memuat / belum dikonfigurasi -->
   <div class="state-page" id="statePage" hidden></div>
@@ -69,17 +69,17 @@
   <!-- ═══════════ SITUS PUBLIK (satu halaman) ═══════════ -->
   <div id="site">
     <!-- F1: Info bar atas -->
-    <div class="infobar" id="infobar" role="complementary" aria-label="Info kontak singkat"></div>
+    <div class="infobar" id="infobar" role="complementary" aria-label="Quick contact info"></div>
 
     <!-- F2: Navigasi sticky -->
     <header class="nav" id="nav">
       <div class="container">
-        <button class="brand" id="brand" data-go="beranda" aria-label="Kembali ke atas"><span class="sk" style="width:44px;height:44px;border-radius:50%"></span><span class="sk" style="width:120px;height:16px"></span></button>
-        <nav class="nav-links" id="navLinks" aria-label="Navigasi utama"></nav>
+        <button class="brand" id="brand" data-go="beranda" aria-label="Back to top"><span class="sk" style="width:44px;height:44px;border-radius:50%"></span><span class="sk" style="width:120px;height:16px"></span></button>
+        <nav class="nav-links" id="navLinks" aria-label="Main navigation"></nav>
         <button class="btn btn-yellow btn-sm nav-cta" data-go="kontak" data-cta="Hubungi Saya">
-          Hubungi Saya <i class="bi bi-arrow-right" aria-hidden="true"></i>
+          Contact Me <i class="bi bi-arrow-right" aria-hidden="true"></i>
         </button>
-        <button class="icon-btn nav-burger" id="burger" aria-label="Buka menu" aria-expanded="false" aria-controls="mmenu">
+        <button class="icon-btn nav-burger" id="burger" aria-label="Open menu" aria-expanded="false" aria-controls="mmenu">
           <i class="bi bi-list" aria-hidden="true" style="font-size:22px"></i>
         </button>
       </div>
@@ -87,7 +87,7 @@
 
     <main id="main">
       <!-- F3: Hero -->
-      <section class="hero" id="beranda" aria-label="Beranda"><div class="container" id="heroBox">
+      <section class="hero" id="beranda" aria-label="Home"><div class="container" id="heroBox">
         <div class="hero-text" aria-hidden="true">
           <span class="sk" style="width:210px;height:32px;border-radius:999px"></span>
           <span class="sk sk-h"></span><span class="sk sk-h" style="width:72%"></span>
@@ -101,8 +101,8 @@
       <section class="bg-white" id="tentang" aria-labelledby="h-tentang">
         <div class="container">
           <div class="sec-head reveal">
-            <span class="label-pill">Tentang</span>
-            <h2 id="h-tentang">Tentang <span class="accent">Saya</span> &amp; Prinsip Kerja</h2>
+            <span class="label-pill">About</span>
+            <h2 id="h-tentang">About <span class="accent">Me</span> &amp; Working Principles</h2>
             <p id="subTentang"></p>
           </div>
           <div class="about-grid" id="aboutBox"><div class="card sk-card" aria-hidden="true" style="min-height:260px"><span class="sk sk-t" style="width:50%"></span><span class="sk sk-t"></span><span class="sk sk-t" style="width:80%"></span></div><div class="card sk-card" aria-hidden="true" style="min-height:260px"><span class="sk sk-t" style="width:40%"></span><span class="sk sk-t"></span></div></div>
@@ -113,11 +113,11 @@
       <section class="bg-sky" id="keahlian" aria-labelledby="h-keahlian">
         <div class="container">
           <div class="sec-head reveal">
-            <span class="label-pill" style="background:#fff">Keahlian</span>
-            <h2 id="h-keahlian">Keahlian <span class="accent">Saya</span></h2>
+            <span class="label-pill" style="background:#fff">Expertise</span>
+            <h2 id="h-keahlian">My <span class="accent">Expertise</span></h2>
             <p id="subKeahlian"></p>
           </div>
-          <div class="skills-filter reveal"><div class="seg" id="skillFilter" role="group" aria-label="Filter kategori keahlian"></div></div>
+          <div class="skills-filter reveal"><div class="seg" id="skillFilter" role="group" aria-label="Filter expertise by category"></div></div>
           <div class="skills-grid" id="skillsBox"><div class="card sk-card" aria-hidden="true"><span class="sk" style="width:48px;height:48px;border-radius:14px"></span><span class="sk sk-t" style="width:70%;margin-top:18px"></span><span class="sk sk-t" style="width:90%"></span><span class="sk" style="height:8px;margin-top:16px"></span></div><div class="card sk-card" aria-hidden="true"><span class="sk" style="width:48px;height:48px;border-radius:14px"></span><span class="sk sk-t" style="width:70%;margin-top:18px"></span><span class="sk sk-t" style="width:90%"></span><span class="sk" style="height:8px;margin-top:16px"></span></div><div class="card sk-card" aria-hidden="true"><span class="sk" style="width:48px;height:48px;border-radius:14px"></span><span class="sk sk-t" style="width:70%;margin-top:18px"></span><span class="sk sk-t" style="width:90%"></span><span class="sk" style="height:8px;margin-top:16px"></span></div><div class="card sk-card" aria-hidden="true"><span class="sk" style="width:48px;height:48px;border-radius:14px"></span><span class="sk sk-t" style="width:70%;margin-top:18px"></span><span class="sk sk-t" style="width:90%"></span><span class="sk" style="height:8px;margin-top:16px"></span></div></div>
         </div>
       </section>
@@ -127,20 +127,20 @@
         <div class="container">
           <div class="port-head reveal">
             <div>
-              <span class="label-pill">Portofolio</span>
-              <h2 class="sec-title" id="h-portofolio" style="margin-top:14px">Hasil Karya <span class="accent">Terbaru</span></h2>
+              <span class="label-pill">Services</span>
+              <h2 class="sec-title" id="h-portofolio" style="margin-top:14px">Services &amp; <span class="accent">Recent</span> Work</h2>
               <p class="sec-sub" id="subPortofolio"></p>
             </div>
             <div class="port-tools">
-              <div class="seg" id="projFilter" role="group" aria-label="Filter kategori proyek"></div>
+              <div class="seg" id="projFilter" role="group" aria-label="Filter projects by category"></div>
               <div class="port-arrows">
-                <button class="icon-btn" id="projPrev" aria-label="Proyek sebelumnya"><i class="bi bi-arrow-left" aria-hidden="true"></i></button>
-                <button class="icon-btn dark" id="projNext" aria-label="Proyek berikutnya"><i class="bi bi-arrow-right" aria-hidden="true"></i></button>
+                <button class="icon-btn" id="projPrev" aria-label="Previous project"><i class="bi bi-arrow-left" aria-hidden="true"></i></button>
+                <button class="icon-btn dark" id="projNext" aria-label="Next project"><i class="bi bi-arrow-right" aria-hidden="true"></i></button>
               </div>
             </div>
           </div>
           <div class="proj-grid" id="projBox" aria-live="polite"><div class="card sk-card sk-proj" aria-hidden="true"><span class="sk sk-cover"></span><span class="sk sk-t" style="width:65%;margin:18px 20px 0"></span><span class="sk sk-t" style="width:85%;margin:10px 20px 22px"></span></div><div class="card sk-card sk-proj" aria-hidden="true"><span class="sk sk-cover"></span><span class="sk sk-t" style="width:65%;margin:18px 20px 0"></span><span class="sk sk-t" style="width:85%;margin:10px 20px 22px"></span></div><div class="card sk-card sk-proj" aria-hidden="true"><span class="sk sk-cover"></span><span class="sk sk-t" style="width:65%;margin:18px 20px 0"></span><span class="sk sk-t" style="width:85%;margin:10px 20px 22px"></span></div></div>
-          <div class="dots" id="projDots" role="group" aria-label="Halaman proyek"></div>
+          <div class="dots" id="projDots" role="group" aria-label="Project pages"></div>
         </div>
       </section>
 
@@ -148,14 +148,14 @@
       <section class="bg-cream" id="testimoni" aria-labelledby="h-testimoni" hidden>
         <div class="container">
           <div class="sec-head reveal">
-            <span class="label-pill" style="background:#fff">Testimoni</span>
-            <h2 id="h-testimoni">Kata <span class="accent">Mereka</span></h2>
+            <span class="label-pill" style="background:#fff">Testimonials</span>
+            <h2 id="h-testimoni">What <span class="accent">Clients</span> Say</h2>
             <p id="subTestimoni"></p>
           </div>
-          <div class="testi-track" id="testiBox" tabindex="0" aria-label="Daftar testimoni, geser untuk melihat lainnya"></div>
+          <div class="testi-track" id="testiBox" tabindex="0" aria-label="Testimonials, scroll to see more"></div>
           <div class="testi-nav" id="testiNav">
-            <button class="icon-btn" id="testiPrev" aria-label="Testimoni sebelumnya"><i class="bi bi-arrow-left" aria-hidden="true"></i></button>
-            <button class="icon-btn dark" id="testiNext" aria-label="Testimoni berikutnya"><i class="bi bi-arrow-right" aria-hidden="true"></i></button>
+            <button class="icon-btn" id="testiPrev" aria-label="Previous testimonial"><i class="bi bi-arrow-left" aria-hidden="true"></i></button>
+            <button class="icon-btn dark" id="testiNext" aria-label="Next testimonial"><i class="bi bi-arrow-right" aria-hidden="true"></i></button>
           </div>
         </div>
       </section>
@@ -164,31 +164,31 @@
       <section class="ribbon" id="kontak" aria-labelledby="h-kontak">
         <div class="container">
           <div>
-            <h2 id="h-kontak">Punya Proyek atau Peluang Kerja Sama?</h2>
+            <h2 id="h-kontak">Have a Project or Partnership in Mind?</h2>
             <p id="subKontak"></p>
           </div>
-          <button class="btn btn-yellow" data-focus-form data-cta="Kirim Pesan (pita)">Kirim Pesan <i class="bi bi-chat-square-text" aria-hidden="true"></i></button>
+          <button class="btn btn-yellow" data-focus-form data-cta="Kirim Pesan (pita)">Send Message <i class="bi bi-chat-square-text" aria-hidden="true"></i></button>
         </div>
       </section>
-      <section class="contact" aria-label="Formulir kontak">
+      <section class="contact" aria-label="Contact form">
         <div class="container contact-grid">
           <div class="card form-card reveal" id="formCard">
-            <h3>Kirim Pesan Langsung</h3>
-            <p>Isi formulir di bawah, pesan akan langsung masuk ke kotak masuk saya.</p>
+            <h3>Send a Direct Message</h3>
+            <p>Fill in the form below and your message will go straight to my inbox.</p>
             <form id="contactForm" novalidate>
               <div class="field" data-f="nama">
-                <label for="fNama">Nama Lengkap <span class="req" aria-hidden="true">*</span></label>
-                <input class="input" id="fNama" name="nama" type="text" autocomplete="name" maxlength="100" placeholder="Contoh: Raden Saleh" required>
+                <label for="fNama">Full Name <span class="req" aria-hidden="true">*</span></label>
+                <input class="input" id="fNama" name="nama" type="text" autocomplete="name" maxlength="100" placeholder="Example: Jane Smith" required>
                 <span class="msg" role="alert"><i class="bi bi-exclamation-circle" aria-hidden="true"></i><span></span></span>
               </div>
               <div class="field" data-f="email">
-                <label for="fEmail">Alamat Email <span class="req" aria-hidden="true">*</span></label>
-                <input class="input" id="fEmail" name="email" type="email" autocomplete="email" inputmode="email" maxlength="150" placeholder="nama@perusahaan.com" required>
+                <label for="fEmail">Email Address <span class="req" aria-hidden="true">*</span></label>
+                <input class="input" id="fEmail" name="email" type="email" autocomplete="email" inputmode="email" maxlength="150" placeholder="name@company.com" required>
                 <span class="msg" role="alert"><i class="bi bi-exclamation-circle" aria-hidden="true"></i><span></span></span>
               </div>
               <div class="field" data-f="pesan">
-                <label for="fPesan">Pesan Anda <span class="req" aria-hidden="true">*</span></label>
-                <textarea class="input" id="fPesan" name="pesan" rows="5" maxlength="1200" placeholder="Jelaskan kebutuhan proyek, timeline perkiraan, atau tautan pendukung." required aria-describedby="fCount"></textarea>
+                <label for="fPesan">Your Message <span class="req" aria-hidden="true">*</span></label>
+                <textarea class="input" id="fPesan" name="pesan" rows="5" maxlength="1200" placeholder="Describe your needs, expected timeline, or any helpful links." required aria-describedby="fCount"></textarea>
                 <div class="field-foot">
                   <span class="msg" role="alert"><i class="bi bi-exclamation-circle" aria-hidden="true"></i><span></span></span>
                   <span class="counter tnum" id="fCount">0/1.000</span>
@@ -199,18 +199,18 @@
                 <label for="fWeb">Website</label>
                 <input id="fWeb" name="website" type="text" tabindex="-1" autocomplete="off">
               </div>
-              <button type="submit" class="btn btn-primary" id="fSubmit">Kirim Pesan Sekarang <i class="bi bi-send" aria-hidden="true"></i></button>
-              <div class="form-note"><i class="bi bi-shield-check" aria-hidden="true"></i> Dilindungi filter spam otomatis (maksimal 5 pesan per jam).</div>
+              <button type="submit" class="btn btn-primary" id="fSubmit">Send Message Now <i class="bi bi-send" aria-hidden="true"></i></button>
+              <div class="form-note"><i class="bi bi-shield-check" aria-hidden="true"></i> Protected by an automatic spam filter (maximum 5 messages per hour).</div>
             </form>
             <div class="form-success" role="status" aria-live="polite">
               <div class="big"><i class="bi bi-check-lg" aria-hidden="true"></i></div>
-              <h3>Pesan terkirim!</h3>
-              <p id="sentInfo">Terima kasih, saya akan membalas secepatnya.</p>
-              <button class="btn btn-ghost" id="sendAnother">Kirim pesan lain</button>
+              <h3>Message sent!</h3>
+              <p id="sentInfo">Thank you, I will reply as soon as possible.</p>
+              <button class="btn btn-ghost" id="sendAnother">Send another message</button>
             </div>
           </div>
           <div class="card ch-card reveal" style="--d:.08s">
-            <h3>Saluran Langsung</h3>
+            <h3>Direct Channels</h3>
             <div class="ch-list" id="channelBox"></div>
           </div>
         </div>
@@ -222,19 +222,19 @@
   </div>
 
   <!-- Menu ponsel -->
-  <div class="mmenu" id="mmenu" role="dialog" aria-modal="true" aria-label="Menu navigasi">
+  <div class="mmenu" id="mmenu" role="dialog" aria-modal="true" aria-label="Navigation menu">
     <div class="mmenu-top">
       <span class="brand" id="mbrand"></span>
-      <button class="icon-btn" id="mclose" aria-label="Tutup menu"><i class="bi bi-x-lg" aria-hidden="true"></i></button>
+      <button class="icon-btn" id="mclose" aria-label="Close menu"><i class="bi bi-x-lg" aria-hidden="true"></i></button>
     </div>
-    <nav id="mlinks" aria-label="Navigasi ponsel"></nav>
-    <button class="btn btn-yellow" data-go="kontak" data-cta="Hubungi Saya (menu)">Hubungi Saya <i class="bi bi-arrow-right" aria-hidden="true"></i></button>
+    <nav id="mlinks" aria-label="Mobile navigation"></nav>
+    <button class="btn btn-yellow" data-go="kontak" data-cta="Hubungi Saya (menu)">Contact Me <i class="bi bi-arrow-right" aria-hidden="true"></i></button>
   </div>
 
   <!-- Modal video perkenalan -->
-  <div class="modal" id="videoModal" role="dialog" aria-modal="true" aria-label="Video perkenalan">
+  <div class="modal" id="videoModal" role="dialog" aria-modal="true" aria-label="Introduction video">
     <div class="modal-box">
-      <div class="modal-head"><span>Video Perkenalan</span><button class="icon-btn" data-close-modal aria-label="Tutup video"><i class="bi bi-x-lg" aria-hidden="true"></i></button></div>
+      <div class="modal-head"><span>Introduction Video</span><button class="icon-btn" data-close-modal aria-label="Close video"><i class="bi bi-x-lg" aria-hidden="true"></i></button></div>
       <div class="video-wrap" id="videoWrap"></div>
     </div>
   </div>
@@ -242,6 +242,6 @@
   <div class="toasts" id="toasts" aria-live="polite" aria-atomic="false"></div>
 
 
-  <noscript><div class="state-page"><div class="card"><h1>JavaScript dinonaktifkan</h1><p>Aktifkan JavaScript di browser untuk melihat portofolio ini.</p></div></div></noscript>
+  <noscript><div class="state-page"><div class="card"><h1>JavaScript is disabled</h1><p>Please enable JavaScript in your browser to view this website.</p></div></div></noscript>
 </body>
 </html>

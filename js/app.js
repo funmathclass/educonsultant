@@ -26,8 +26,8 @@
     data: null,
     h: '',
     started: false,
-    skillCat: 'Semua',
-    projCat: 'Semua',
+    skillCat: 'All',
+    projCat: 'All',
     projPage: 0,
     lastServer: 0,
     device: PF.deviceType(),
@@ -38,7 +38,7 @@
     })()
   };
 
-  const NAV = [['beranda', 'Beranda'], ['tentang', 'Tentang'], ['keahlian', 'Keahlian'], ['portofolio', 'Portofolio'], ['testimoni', 'Testimoni'], ['kontak', 'Kontak']];
+  const NAV = [['beranda', 'Home'], ['tentang', 'About'], ['keahlian', 'Expertise'], ['portofolio', 'Services'], ['testimoni', 'Testimonials'], ['kontak', 'Contact']];
 
   // ════════════════════════════════════════════════════════
   // BAGIAN 3: RENDER BAGIAN-BAGIAN HALAMAN (F1–F9)
@@ -84,7 +84,7 @@
 
   function renderNav() {
     const p = prof();
-    const brand = `${avatarHtml()}<span style="min-width:0"><span class="brand-name">${esc(p.nama_lengkap || 'Portofolio')}<i class="bi bi-patch-check-fill" aria-hidden="true"></i></span><span class="brand-role" style="display:block">${esc(p.profesi || '')}</span></span>`;
+    const brand = `${avatarHtml()}<span style="min-width:0"><span class="brand-name">${esc(p.nama_lengkap || 'Education Consultant')}<i class="bi bi-patch-check-fill" aria-hidden="true"></i></span><span class="brand-role" style="display:block">${esc(p.profesi || '')}</span></span>`;
     $('#brand').innerHTML = brand;
     $('#mbrand').innerHTML = `<span class="brand-name" style="color:#fff">${esc(p.nama_lengkap || '')}</span>`;
     $('#navLinks').innerHTML = navItems().map(([id, label]) => `<button type="button" data-go="${id}" data-nav="${id}">${label}</button>`).join('');
@@ -106,12 +106,12 @@
     const p = prof();
     const photo = safeUrl(p.url_foto);
     const years = parseInt(p.tahun_pengalaman, 10) || 0;
-    const t1 = p.teks_tombol_1 || 'Lihat Portofolio';
-    const t2 = p.teks_tombol_2 || 'Tentang Saya';
+    const t1 = p.teks_tombol_1 || 'View My Work';
+    const t2 = p.teks_tombol_2 || 'About Me';
     const v = videoInfo(p.url_video_intro);
     const videoBtn = !v ? '' : v.embed
-      ? `<button type="button" class="video-chip" id="videoBtn" data-cta="Video Perkenalan"><span class="play"><i class="bi bi-play-fill" aria-hidden="true"></i></span>Tonton Video Perkenalan</button>`
-      : `<a class="video-chip" href="${esc(v.link)}" target="_blank" rel="noopener" data-cta="Video Perkenalan"><span class="play"><i class="bi bi-play-fill" aria-hidden="true"></i></span>Tonton Video Perkenalan</a>`;
+      ? `<button type="button" class="video-chip" id="videoBtn" data-cta="Video Perkenalan"><span class="play"><i class="bi bi-play-fill" aria-hidden="true"></i></span>Watch Introduction Video</button>`
+      : `<a class="video-chip" href="${esc(v.link)}" target="_blank" rel="noopener" data-cta="Video Perkenalan"><span class="play"><i class="bi bi-play-fill" aria-hidden="true"></i></span>Watch Introduction Video</a>`;
     $('#heroBox').innerHTML = `
       <div class="hero-text" style="animation:fadeUp .5s var(--ease) both">
         ${p.profesi ? `<span class="hero-label"><span class="dot dot-yellow" aria-hidden="true"></span>${esc(p.profesi)}</span>` : ''}
@@ -130,7 +130,7 @@
           : `<span class="initials" aria-hidden="true">${esc(initials(p.nama_lengkap))}</span>`}</div>
         <i class="bi bi-stars hero-spark" aria-hidden="true"></i>
         <i class="bi bi-star-fill hero-spark-2" aria-hidden="true"></i>
-        ${years ? `<div class="exp-badge"><span class="num tnum">${years}+</span><div><b>Tahun Pengalaman</b><small>Pengalaman profesional</small></div></div>` : ''}
+        ${years ? `<div class="exp-badge"><span class="num tnum">${years}+</span><div><b>Years of Experience</b><small>Professional experience</small></div></div>` : ''}
       </div>`;
   }
 
@@ -145,13 +145,13 @@
     const list = (arr) => arr.map((x) => `<div class="about-item"><b>${esc(x.judul)}</b><span>${[x.instansi, x.periode].filter(Boolean).map(esc).join(' • ')}</span>${x.deskripsi ? `<span>${esc(x.deskripsi)}</span>` : ''}</div>`).join('');
     const cards = [];
     const pend = by('pendidikan'); const peng = by('pengalaman'); const minat = by('minat'); const tujuan = by('tujuan_karier');
-    if (pend.length) cards.push(['mortarboard', 'Pendidikan', list(pend)]);
-    if (peng.length) cards.push(['briefcase', 'Pengalaman Utama', list(peng)]);
+    if (pend.length) cards.push(['mortarboard', 'Education', list(pend)]);
+    if (peng.length) cards.push(['briefcase', 'Key Experience', list(peng)]);
     if (minat.length) {
       const desc = minat.map((x) => x.deskripsi).filter(Boolean)[0] || '';
-      cards.push(['lightbulb', 'Minat & Riset', `${desc ? `<p>${esc(desc)}</p>` : ''}<div class="tag-row">${minat.map((x) => `<span class="chip chip-sky">${esc(x.judul)}</span>`).join('')}</div>`]);
+      cards.push(['lightbulb', 'Interests & Research', `${desc ? `<p>${esc(desc)}</p>` : ''}<div class="tag-row">${minat.map((x) => `<span class="chip chip-sky">${esc(x.judul)}</span>`).join('')}</div>`]);
     }
-    if (tujuan.length) cards.push(['flag', 'Tujuan Karier', tujuan.map((x) => `<p>${esc(x.deskripsi || x.judul)}</p>`).join('')]);
+    if (tujuan.length) cards.push(['flag', 'Career Goal', tujuan.map((x) => `<p>${esc(x.deskripsi || x.judul)}</p>`).join('')]);
     $('#aboutBox').innerHTML = `
       <div class="about-me reveal">
         <div class="about-id">${avatarHtml()}<div><b>${esc(p.nama_lengkap || '')}</b><small>${esc(s.lokasi || '')}</small></div></div>
@@ -163,7 +163,7 @@
         <article class="card about-card lift reveal" style="--d:${(i * 0.06).toFixed(2)}s">
           <span class="ic"><i class="bi bi-${ic}" aria-hidden="true"></i></span>
           <h3>${title}</h3><div>${body}</div>
-        </article>`).join('') : `<div class="empty"><i class="bi bi-journal-text"></i>Riwayat belum diisi.</div>`}</div>`;
+        </article>`).join('') : `<div class="empty"><i class="bi bi-journal-text"></i>Background information has not been added yet.</div>`}</div>`;
     // Kartu profil: avatar besar bersudut
     const av = $('#aboutBox .about-id .avatar'); if (av) av.style.borderRadius = '16px';
   }
@@ -178,10 +178,10 @@
     $('#subKeahlian').textContent = String(s.sub_keahlian || '').replace(/^'/, '');
     const all = D().keahlian || [];
     const cats = Array.from(new Set(all.map((x) => String(x.kategori || 'Lainnya'))));
-    if (S.skillCat !== 'Semua' && cats.indexOf(S.skillCat) === -1) S.skillCat = 'Semua';
-    $('#skillFilter').innerHTML = ['Semua'].concat(cats).map((c) => `<button type="button" data-skillcat="${esc(c)}" aria-pressed="${c === S.skillCat}">${esc(c)}</button>`).join('');
+    if (S.skillCat !== 'All' && cats.indexOf(S.skillCat) === -1) S.skillCat = 'All';
+    $('#skillFilter').innerHTML = ['All'].concat(cats).map((c) => `<button type="button" data-skillcat="${esc(c)}" aria-pressed="${c === S.skillCat}">${esc(c)}</button>`).join('');
     $('#skillFilter').parentElement.hidden = cats.length < 2;
-    const list = S.skillCat === 'Semua' ? all : all.filter((x) => String(x.kategori) === S.skillCat);
+    const list = S.skillCat === 'All' ? all : all.filter((x) => String(x.kategori) === S.skillCat);
     $('#skillsBox').innerHTML = list.length ? list.map((x, i) => {
       const lv = Math.max(0, Math.min(100, parseInt(x.level, 10) || 0));
       return `<article class="card skill-card lift reveal" style="--d:${((i % 4) * 0.05).toFixed(2)}s">
@@ -191,7 +191,7 @@
         <div class="bar" role="progressbar" aria-label="Tingkat kemahiran ${esc(x.nama_skill)}" aria-valuemin="0" aria-valuemax="100" aria-valuenow="${lv}"><span style="--w:${lv}%"></span></div>
         <div class="skill-meta"><span>Kemahiran</span><b class="tnum">${lv}%</b></div>
       </article>`;
-    }).join('') : `<div class="empty" style="grid-column:1/-1"><i class="bi bi-stars"></i>Belum ada keahlian di kategori ini.</div>`;
+    }).join('') : `<div class="empty" style="grid-column:1/-1"><i class="bi bi-stars"></i>No expertise in this category yet.</div>`;
   }
 
   function projPageSize() {
@@ -204,10 +204,10 @@
     $('#subPortofolio').textContent = String(s.sub_portofolio || '').replace(/^'/, '');
     const all = D().portofolio || [];
     const cats = Array.from(new Set(all.map((x) => String(x.kategori || 'Lainnya'))));
-    if (S.projCat !== 'Semua' && cats.indexOf(S.projCat) === -1) S.projCat = 'Semua';
-    $('#projFilter').innerHTML = ['Semua'].concat(cats).map((c) => `<button type="button" data-projcat="${esc(c)}" aria-pressed="${c === S.projCat}">${esc(c)}</button>`).join('');
+    if (S.projCat !== 'All' && cats.indexOf(S.projCat) === -1) S.projCat = 'All';
+    $('#projFilter').innerHTML = ['All'].concat(cats).map((c) => `<button type="button" data-projcat="${esc(c)}" aria-pressed="${c === S.projCat}">${esc(c)}</button>`).join('');
     $('#projFilter').hidden = cats.length < 2;
-    const list = S.projCat === 'Semua' ? all : all.filter((x) => String(x.kategori) === S.projCat);
+    const list = S.projCat === 'All' ? all : all.filter((x) => String(x.kategori) === S.projCat);
     const size = projPageSize();
     const pages = Math.max(1, Math.ceil(list.length / size));
     S.projPage = Math.min(S.projPage, pages - 1);
@@ -227,13 +227,13 @@
           ${x.deskripsi_singkat ? `<p>${esc(x.deskripsi_singkat)}</p>` : ''}
           ${tech.length ? `<div class="tag-row">${tech.map((t) => `<span class="chip">${esc(t)}</span>`).join('')}</div>` : ''}
           <div class="proj-foot">
-            <small>${x.periode ? 'Selesai • ' + esc(x.periode) : esc(x.kategori)}</small>
+            <small>${x.periode ? 'Completed • ' + esc(x.periode) : esc(x.kategori)}</small>
             ${link ? `<a class="proj-go" href="${esc(link)}" target="_blank" rel="noopener" data-proj="${esc(x.judul)}" aria-label="Buka proyek ${esc(x.judul)} (tab baru)"><i class="bi bi-arrow-up-right" aria-hidden="true"></i></a>`
                    : `<span class="proj-go off" aria-hidden="true"><i class="bi bi-lock"></i></span>`}
           </div>
         </div>
       </article>`;
-    }).join('') : `<div class="empty" style="grid-column:1/-1"><i class="bi bi-folder2-open"></i>Belum ada proyek di kategori ini.</div>`;
+    }).join('') : `<div class="empty" style="grid-column:1/-1"><i class="bi bi-folder2-open"></i>No projects in this category yet.</div>`;
     $('#projDots').innerHTML = pages > 1 ? Array.from({ length: pages }, (_, i) =>
       `<button type="button" data-projpage="${i}" aria-label="Halaman ${i + 1}" aria-current="${i === S.projPage}"></button>`).join('') : '';
     $('#projPrev').disabled = S.projPage <= 0;
@@ -282,9 +282,9 @@
       let host = k.url; try { host = new URL(k.url).hostname.replace(/^www\./, ''); } catch (e) { /* biarkan */ }
       rows.push(`<a class="ch-row" href="${esc(k.url)}" target="_blank" rel="noopener" data-kontak="${esc(k.label)}"><span class="ic"><i class="bi bi-${icon(k.ikon)}" aria-hidden="true"></i></span><span><small>${esc(k.label)}</small><b>${esc(host)}</b></span><i class="bi bi-arrow-up-right go" aria-hidden="true"></i></a>`);
     });
-    if (s.zona_waktu || s.info_bar_teks) rows.push(`<div class="ch-row"><span class="ic"><i class="bi bi-clock" aria-hidden="true"></i></span><span><small>Zona waktu & respons</small><b>${esc([s.zona_waktu, s.info_bar_teks].filter(Boolean).join(' • '))}</b></span></div>`);
-    if (s.lokasi) rows.push(`<div class="ch-row"><span class="ic"><i class="bi bi-geo-alt" aria-hidden="true"></i></span><span><small>Lokasi</small><b>${esc(s.lokasi)}</b></span>${s.status_tersedia ? `<span class="chip chip-sky go" style="margin-left:auto">${esc(s.status_tersedia)}</span>` : ''}</div>`);
-    $('#channelBox').innerHTML = rows.join('') || '<div class="empty">Belum ada kanal kontak.</div>';
+    if (s.zona_waktu || s.info_bar_teks) rows.push(`<div class="ch-row"><span class="ic"><i class="bi bi-clock" aria-hidden="true"></i></span><span><small>Time zone & response time</small><b>${esc([s.zona_waktu, s.info_bar_teks].filter(Boolean).join(' • '))}</b></span></div>`);
+    if (s.lokasi) rows.push(`<div class="ch-row"><span class="ic"><i class="bi bi-geo-alt" aria-hidden="true"></i></span><span><small>Location</small><b>${esc(s.lokasi)}</b></span>${s.status_tersedia ? `<span class="chip chip-sky go" style="margin-left:auto">${esc(s.status_tersedia)}</span>` : ''}</div>`);
+    $('#channelBox').innerHTML = rows.join('') || '<div class="empty">No contact channels yet.</div>';
   }
 
   function renderFooter() {
@@ -298,7 +298,7 @@
           <p>${esc(s.tagline_footer || '')}</p>
           ${s.status_tersedia ? `<span class="footer-status"><span class="dot dot-yellow" aria-hidden="true"></span>${esc(s.status_tersedia)}</span>` : ''}
         </div>
-        <div><h4>Navigasi</h4><div class="f-links">${navItems().map(([id, label]) => `<button type="button" data-go="${id}">${label}</button>`).join('')}</div></div>
+        <div><h4>Navigation</h4><div class="f-links">${navItems().map(([id, label]) => `<button type="button" data-go="${id}">${label}</button>`).join('')}</div></div>
         <div><h4>Kontak Langsung</h4><div class="f-links">
           ${s.email_publik ? `<a href="mailto:${esc(s.email_publik)}" target="_blank" rel="noopener" data-kontak="Email (footer)"><i class="bi bi-envelope" aria-hidden="true"></i>${esc(s.email_publik)}</a>` : ''}
           ${s.telepon ? `<a href="${esc(waLink(s.telepon))}" target="_blank" rel="noopener" data-kontak="Telepon (footer)"><i class="bi bi-telephone" aria-hidden="true"></i>${esc(s.telepon)}</a>` : ''}
@@ -310,7 +310,7 @@
           <div class="to-top"><span>Kembali ke atas</span><button type="button" class="icon-btn" data-go="beranda" aria-label="Kembali ke atas"><i class="bi bi-arrow-up" aria-hidden="true"></i></button></div>
         </div>
       </div>
-      <div class="footer-bottom"><span>© ${new Date().getFullYear()} ${esc(p.nama_lengkap || '')}. Semua hak dilindungi.</span><span>${esc(s.zona_waktu || '')}</span></div>
+      <div class="footer-bottom"><span>© ${new Date().getFullYear()} ${esc(p.nama_lengkap || '')}. All rights reserved.</span><span>${esc(s.zona_waktu || '')}</span></div>
     </div>`;
   }
 
@@ -335,7 +335,7 @@
   /** Halaman status (perawatan / gagal memuat / belum dikonfigurasi). */
   function showState(title, msg, ic, retry) {
     const el = $('#statePage');
-    el.innerHTML = `<div class="card"><span class="ic"><i class="bi bi-${ic || 'tools'}" aria-hidden="true"></i></span><h1>${esc(title)}</h1><p>${esc(msg)}</p>${retry ? '<button type="button" class="btn btn-primary" id="btnReload"><i class="bi bi-arrow-clockwise" aria-hidden="true"></i>Coba lagi</button>' : ''}</div>`;
+    el.innerHTML = `<div class="card"><span class="ic"><i class="bi bi-${ic || 'tools'}" aria-hidden="true"></i></span><h1>${esc(title)}</h1><p>${esc(msg)}</p>${retry ? '<button type="button" class="btn btn-primary" id="btnReload"><i class="bi bi-arrow-clockwise" aria-hidden="true"></i>Try again</button>' : ''}</div>`;
     el.hidden = false;
     $('#site').hidden = true;
     document.body.classList.remove('is-loading');
@@ -500,13 +500,13 @@
 
   function validate(v) {
     const err = {};
-    if (!v.nama) err.nama = 'Nama wajib diisi.';
-    else if (MARKUP.test(v.nama)) err.nama = 'Nama tidak boleh berisi kode HTML atau skrip.';
-    if (!v.email) err.email = 'Email wajib diisi agar saya bisa membalas.';
-    else if (!EMAIL.test(v.email)) err.email = 'Format email belum benar, contoh: nama@domain.com';
-    if (!v.pesan) err.pesan = 'Pesan wajib diisi.';
-    else if (v.pesan.length > 1000) err.pesan = 'Pesan maksimal 1.000 karakter.';
-    else if (MARKUP.test(v.pesan)) err.pesan = 'Pesan tidak boleh berisi kode HTML atau skrip.';
+    if (!v.nama) err.nama = 'Name is required.';
+    else if (MARKUP.test(v.nama)) err.nama = 'Name must not contain HTML or script code.';
+    if (!v.email) err.email = 'Email is required so I can reply.';
+    else if (!EMAIL.test(v.email)) err.email = 'Email format is not correct, for example: name@domain.com';
+    if (!v.pesan) err.pesan = 'Message is required.';
+    else if (v.pesan.length > 1000) err.pesan = 'Message may not exceed 1,000 characters.';
+    else if (MARKUP.test(v.pesan)) err.pesan = 'Message must not contain HTML or script code.';
     ['nama', 'email', 'pesan'].forEach((k) => fieldErr(k, err[k]));
     return err;
   }
@@ -550,12 +550,12 @@
     // Batas lokal 5 pesan/jam (server tetap memeriksa ulang)
     const hour = Date.now() - 3600000;
     const sent = (ls.get('sent', []) || []).filter((t) => t > hour);
-    if (sent.length >= 5) { toast('Batas 5 pesan per jam tercapai. Silakan coba lagi nanti.', 'warning'); return; }
+    if (sent.length >= 5) { toast('Limit of 5 messages per hour reached. Please try again later.', 'warning'); return; }
 
     // OPTIMISTIC: konfirmasi tampil seketika, kirim di latar belakang
     const card = $('#formCard');
     $('#fSubmit').classList.add('is-loading');
-    $('#sentInfo').innerHTML = `Terima kasih, <b>${esc(v.nama)}</b>. Pesan Anda sedang dikirim… <span class="spinner spin-inline"></span>`;
+    $('#sentInfo').innerHTML = `Thank you, <b>${esc(v.nama)}</b>. Your message is being sent… <span class="spinner spin-inline"></span>`;
     card.classList.add('sent');
     const okBox = $('.form-success', card);
     okBox.setAttribute('tabindex', '-1');
@@ -569,7 +569,7 @@
         ls.del('pf_draft');
         sent.push(Date.now()); ls.set('sent', sent);
         $('#contactForm').reset(); updateCounter();
-        $('#sentInfo').innerHTML = `Terima kasih, <b>${esc(v.nama)}</b>. Pesan sudah masuk dan akan saya balas ke <b>${esc(v.email)}</b>.`;
+        $('#sentInfo').innerHTML = `Thank you, <b>${esc(v.nama)}</b>. Your message has arrived and I will reply to <b>${esc(v.email)}</b>.`;
         track('klik_cta', 'Kirim Formulir Kontak');
       } else if (res && res.network) {
         // Sinyal hilang → simpan di perangkat, kirim otomatis saat online (reqId sama → tidak ganda)
@@ -578,7 +578,7 @@
         ls.set('outbox', box.slice(-5));
         ls.del('pf_draft');
         $('#contactForm').reset(); updateCounter();
-        $('#sentInfo').innerHTML = `Koneksi sedang terputus. Pesan <b>${esc(v.nama)}</b> disimpan di perangkat ini dan <b>terkirim otomatis</b> saat internet kembali.`;
+        $('#sentInfo').innerHTML = `Your connection is offline. The message from <b>${esc(v.nama)}</b> is saved on this device and will be <b>sent automatically</b> when the internet returns.`;
       } else {
         rollback(v, res && res.message, res && res.data && res.data.field);
       }
@@ -592,7 +592,7 @@
     $('#fNama').value = v.nama; $('#fEmail').value = v.email; $('#fPesan').value = v.pesan;
     updateCounter();
     if (field) { fieldErr(field, msg); $(`.field[data-f="${field}"] .input`).focus(); }
-    toast(msg || 'Pesan gagal dikirim.', 'error');
+    toast(msg || 'The message could not be sent.', 'error');
   }
 
   /** Kirim ulang pesan yang tertahan saat offline. */
@@ -607,8 +607,8 @@
       if (res && res.network) break;
       box = box.filter((x) => x.reqId !== item.reqId);
       ls.set('outbox', box);
-      if (res && res.success) toast('Pesan yang tertunda sudah terkirim.', 'success');
-      else toast('Pesan tertunda ditolak server: ' + ((res && res.message) || 'gagal'), 'error');
+      if (res && res.success) toast('Your pending message has been sent.', 'success');
+      else toast('The pending message was rejected by the server: ' + ((res && res.message) || 'failed'), 'error');
     }
     outboxBusy = false;
   }
@@ -679,7 +679,7 @@
     if (src !== 'cache') ls.set('pub', { h: S.h, data, t: Date.now() });
     PF.applyTheme(data.settings);
     if (data.settings.situs_aktif === false) {
-      showState('Situs sedang diperbarui', 'Halaman ini sedang dalam perawatan singkat. Silakan kembali beberapa saat lagi.', 'tools');
+      showState('Site under maintenance', 'This page is briefly under maintenance. Please come back in a few moments.', 'tools');
       return;
     }
     hideState();
@@ -700,7 +700,7 @@
 
   function onServer(res) {
     S.lastServer = Date.now();
-    if (!res || !res.success) throw new Error((res && res.message) || 'Gagal memuat data.');
+    if (!res || !res.success) throw new Error((res && res.message) || 'Could not load the data.');
     if (res.data && res.data.same) {
       const c = ls.get('pub', null);
       if (c && c.h === res.h) { c.t = Date.now(); ls.set('pub', c); }
@@ -712,7 +712,7 @@
   let waitingTurbo = false;
   function fetchFromServer() {
     PF.apiGet({ action: 'public', h: S.h || '' }).then(onServer).catch((e) => {
-      if (!S.data && !waitingTurbo) showState('Gagal memuat halaman', (e && e.message) || 'Koneksi bermasalah.', 'wifi-off', true);
+      if (!S.data && !waitingTurbo) showState('Could not load the page', (e && e.message) || 'Connection problem.', 'wifi-off', true);
     });
   }
 
@@ -720,7 +720,7 @@
     if (!PF.configured) {
       const c0 = ls.get('pub', null);
       if (c0 && c0.data) { show(c0.data, c0.h, 'cache'); return; }
-      showState('Situs belum dikonfigurasi', 'Pemilik situs belum mengisi GAS_URL di js/config.js. Lihat PANDUAN-INSTALASI.md.', 'gear');
+      showState('Site not configured', 'The site owner has not set GAS_URL in js/config.js yet. See PANDUAN-INSTALASI.md.', 'gear');
       return;
     }
     const c = window.__PF_CACHE && window.__PF_CACHE.data && window.__PF_CACHE.h ? window.__PF_CACHE : null;
@@ -731,7 +731,7 @@
       waitingTurbo = true;
       turbo.then((j) => { waitingTurbo = false; if (j && j.h && j.data && !S.data) show(j.data, j.h, 'turbo'); })
         .catch(() => { waitingTurbo = false; })
-        .then(() => { if (!S.data && serverFailed) showState('Gagal memuat halaman', 'Koneksi ke server bermasalah.', 'wifi-off', true); });
+        .then(() => { if (!S.data && serverFailed) showState('Could not load the page', 'Connection to the server failed.', 'wifi-off', true); });
     }
 
     let serverFailed = false;
@@ -741,7 +741,7 @@
         // Percobaan pertama gagal → ulangi dengan retry bertahap
         PF.apiGet({ action: 'public', h: S.h || '' }).then(onServer).catch((e) => {
           serverFailed = true;
-          if (!S.data && !waitingTurbo) showState('Gagal memuat halaman', (e && e.message) || 'Koneksi bermasalah.', 'wifi-off', true);
+          if (!S.data && !waitingTurbo) showState('Could not load the page', (e && e.message) || 'Connection problem.', 'wifi-off', true);
         });
       });
     } else if (!c || Date.now() - (c.t || 0) > 30000) {
