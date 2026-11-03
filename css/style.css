@@ -478,6 +478,105 @@ a.ch-row:hover { background: var(--sky); border-color: rgba(var(--primary-rgb), 
 @media (prefers-reduced-motion: reduce) { .sk { animation: none; } }
 .spin-inline { width: 14px; height: 14px; border-color: rgba(var(--primary-rgb), .25); border-top-color: var(--primary); vertical-align: -2px; }
 
+/* ══ UPGRADE v2.1: 16:9 · popup proyek · testimoni flip · musik latar · lebah ══ */
+
+/* 1. Thumbnail proyek landscape 16:9 */
+.proj-cover { aspect-ratio: 16 / 9; cursor: zoom-in; }
+.proj-cover:focus-visible { outline: 3px solid var(--primary); outline-offset: -3px; }
+.proj-cover .zoom { position: absolute; right: 14px; bottom: 14px; width: 38px; height: 38px; border-radius: 50%; background: rgba(255,255,255,.92); color: var(--navy); display: grid; place-items: center; box-shadow: var(--shadow); opacity: 0; transform: translateY(6px); transition: opacity .2s, transform .2s var(--ease); }
+.proj-card:hover .proj-cover .zoom, .proj-cover:focus-visible .zoom { opacity: 1; transform: none; }
+@media (hover: none) { .proj-cover .zoom { opacity: 1; transform: none; } }
+.sk-cover { height: auto; aspect-ratio: 16 / 9; }
+
+/* Tombol CTA menyala (dipakai di popup) */
+@keyframes ctaGlow {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(255,195,0,.75), 0 8px 22px rgba(255,195,0,.35); transform: translateY(0) scale(1); }
+  50% { box-shadow: 0 0 0 12px rgba(255,195,0,0), 0 10px 30px rgba(255,195,0,.6); transform: translateY(-1px) scale(1.03); }
+}
+@keyframes ctaShine { 0% { left: -60%; } 60%, 100% { left: 130%; } }
+.btn-glow { position: relative; overflow: hidden; animation: ctaGlow 1.6s ease-in-out infinite; }
+.btn-glow::after { content: ''; position: absolute; top: 0; bottom: 0; left: -60%; width: 40%; background: linear-gradient(100deg, transparent, rgba(255,255,255,.75), transparent); transform: skewX(-20deg); animation: ctaShine 2.4s ease-in-out infinite; pointer-events: none; }
+.btn-glow:hover { animation-play-state: paused; }
+
+/* 3. Popup detail proyek */
+.pmodal .modal-box { background: var(--white); width: min(980px, 100%); max-height: calc(100vh - 40px); display: flex; flex-direction: column; }
+.pmodal .modal-head { color: var(--navy); border-bottom: 1px solid var(--line); }
+.pmodal .modal-head .icon-btn { background: var(--chip); color: var(--navy); }
+.pm-body { overflow-y: auto; display: grid; }
+.pm-media { position: relative; aspect-ratio: 16 / 9; background: #0B1F3A; }
+.pm-media img { width: 100%; height: 100%; object-fit: contain; display: block; }
+.pm-media .ph { position: absolute; inset: 0; display: grid; place-items: center; background: linear-gradient(135deg, var(--sky) 0%, #DCE8FF 100%); }
+.pm-media .ph i { font-size: 64px; color: rgba(11,31,58,.2); }
+.pm-text { padding: 24px 24px 28px; display: grid; gap: 14px; align-content: start; }
+.pm-text h3 { font-size: 24px; line-height: 1.25; margin: 0; }
+.pm-text p { color: var(--slate); margin: 0; line-height: 1.7; }
+.pm-meta { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; }
+.pm-cta { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 6px; }
+@media (min-width: 900px) {
+  .pm-body { grid-template-columns: 1.35fr 1fr; }
+  .pm-media { aspect-ratio: auto; min-height: 100%; }
+  .pm-media img { position: absolute; inset: 0; }
+  .pm-text { padding: 30px; }
+}
+
+/* 5. Testimoni interaktif */
+.testi-card { cursor: pointer; transition: transform .25s var(--ease), box-shadow .25s var(--ease); }
+.testi-card:hover, .testi-card:focus-visible { transform: translateY(-6px) rotate(-.4deg); box-shadow: var(--shadow-hover); outline: none; }
+.testi-card:focus-visible { box-shadow: var(--shadow-hover), var(--ring); }
+.testi-card blockquote { display: -webkit-box; -webkit-line-clamp: 6; -webkit-box-orient: vertical; overflow: hidden; }
+.testi-more { font-size: 13px; font-weight: 700; color: var(--primary); display: inline-flex; gap: 6px; align-items: center; opacity: .75; transition: opacity .2s, gap .2s; }
+.testi-card:hover .testi-more, .testi-card:focus-visible .testi-more { opacity: 1; gap: 10px; }
+.testi-flip { display: grid; gap: 20px; grid-template-columns: repeat(var(--slots, 1), minmax(0, 1fr)); padding: 6px 4px 20px; }
+.flip { perspective: 1200px; }
+.flip-inner { display: grid; height: 100%; transition: transform .8s cubic-bezier(.4,.2,.2,1); transform-style: preserve-3d; }
+.flip-inner.flipped { transform: rotateY(180deg); }
+.flip-inner > .face { grid-area: 1 / 1; backface-visibility: hidden; -webkit-backface-visibility: hidden; height: 100%; }
+.flip-inner > .face.back { transform: rotateY(180deg); }
+.flip .testi-card:hover { transform: translateY(-6px); }
+.testi-dots { display: flex; justify-content: center; gap: 6px; margin-top: 4px; }
+.testi-dots i { width: 7px; height: 7px; border-radius: 50%; background: var(--line); transition: background .3s, transform .3s; }
+.testi-dots i.on { background: var(--primary); transform: scale(1.3); }
+.tmodal .modal-box { background: var(--white); width: min(620px, 100%); }
+.tmodal .modal-head { color: var(--navy); }
+.tmodal .modal-head .icon-btn { background: var(--chip); color: var(--navy); }
+.tm-body { padding: 4px 28px 30px; display: grid; gap: 16px; }
+.tm-body blockquote { margin: 0; font-size: 18px; line-height: 1.75; color: var(--navy); }
+.tm-body .q { color: var(--yellow); font-size: 40px; line-height: 1; }
+
+/* 6. Musik latar (pemutar YouTube mini, selalu terlihat saat memutar) */
+.music { position: fixed; right: 16px; bottom: 16px; z-index: 120; font-size: 14px; }
+.music-pill { display: inline-flex; align-items: center; gap: 10px; min-height: 48px; padding: 6px 18px 6px 6px; border-radius: var(--pill); border: 0; background: var(--navy); color: #fff; font-weight: 700; cursor: pointer; box-shadow: 0 10px 28px rgba(11,31,58,.3); }
+.music-pill .ic { width: 36px; height: 36px; border-radius: 50%; background: var(--yellow); color: var(--navy); display: grid; place-items: center; font-size: 17px; }
+.music-pill.wait .ic { animation: ctaGlow 1.6s ease-in-out infinite; }
+.music-panel { width: 216px; background: var(--navy); color: #fff; border-radius: 16px; padding: 6px 8px 8px; box-shadow: 0 16px 40px rgba(11,31,58,.35); }
+.music-top { display: flex; align-items: center; gap: 6px; padding: 0 0 6px 4px; }
+.music-top b { flex: 1; font-size: 12px; white-space: nowrap; letter-spacing: .02em; display: flex; gap: 8px; align-items: center; }
+.music-top button { width: 32px; height: 32px; border-radius: 50%; border: 0; background: rgba(255,255,255,.12); color: #fff; display: grid; place-items: center; cursor: pointer; font-size: 15px; }
+.music-top button:hover { background: rgba(255,255,255,.22); }
+.music-top button:focus-visible, .music-pill:focus-visible { outline: 3px solid var(--yellow); outline-offset: 2px; }
+.music-player { width: 200px; height: 200px; border-radius: 10px; overflow: hidden; background: #000; }
+.music-player iframe { width: 100%; height: 100%; border: 0; display: block; }
+.eq { display: inline-flex; gap: 2px; align-items: flex-end; height: 12px; }
+.eq i { width: 3px; background: var(--yellow); border-radius: 2px; animation: eq .9s ease-in-out infinite; }
+.eq i:nth-child(2) { animation-delay: .2s; } .eq i:nth-child(3) { animation-delay: .4s; }
+.eq.off i { animation: none; height: 3px; opacity: .5; }
+@keyframes eq { 0%, 100% { height: 3px; } 50% { height: 12px; } }
+@media (max-width: 520px) { .music { right: 10px; bottom: 10px; } }
+body:has(.music-panel:not([hidden])) .toasts { bottom: 300px; }
+
+/* 7. Lebah interaktif mengikuti kursor */
+.bee { position: fixed; left: 0; top: 0; width: 46px; height: 46px; z-index: 140; pointer-events: none; will-change: transform; }
+.bee svg { width: 100%; height: 100%; overflow: visible; filter: drop-shadow(0 4px 6px rgba(11,31,58,.25)); }
+.bee .wing { transform-box: fill-box; transform-origin: 50% 100%; animation: wing .09s linear infinite alternate; }
+.bee .wing.w2 { animation-delay: .045s; }
+@keyframes wing { from { transform: scaleY(1); } to { transform: scaleY(.35); } }
+
+@media (prefers-reduced-motion: reduce) {
+  .btn-glow, .btn-glow::after, .music-pill.wait .ic, .eq i { animation: none; }
+  .flip-inner { transition: none; }
+  .testi-card:hover { transform: none; }
+}
+
 /* ── Ikon Bootstrap (subset otomatis; ikon lain dimuat dari CDN bila dibutuhkan) ── */
 @font-face { font-display: block; font-family: "bootstrap-icons"; src: url(../fonts/bi.woff2) format("woff2"); }
 .bi::before, [class^="bi-"]::before, [class*=" bi-"]::before { display: inline-block; font-family: bootstrap-icons !important; font-style: normal; font-weight: normal !important; font-variant: normal; text-transform: none; line-height: 1; vertical-align: -.125em; -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; }
@@ -492,6 +591,7 @@ a.ch-row:hover { background: var(--sky); border-color: rgba(var(--primary-rgb), 
 .bi-arrow-up::before { content: "\f148"; }
 .bi-arrow-up-right::before { content: "\f144"; }
 .bi-arrow-up-short::before { content: "\f145"; }
+.bi-arrows-angle-expand::before { content: "\f14a"; }
 .bi-award::before { content: "\f154"; }
 .bi-bag::before { content: "\f179"; }
 .bi-bank::before { content: "\f62e"; }
@@ -544,6 +644,7 @@ a.ch-row:hover { background: var(--sky); border-color: rgba(var(--primary-rgb), 
 .bi-cup-hot::before { content: "\f7eb"; }
 .bi-currency-dollar::before { content: "\f636"; }
 .bi-cursor::before { content: "\f2e3"; }
+.bi-dash-lg::before { content: "\f63b"; }
 .bi-database::before { content: "\f8c4"; }
 .bi-diagram-2::before { content: "\f2ec"; }
 .bi-diagram-3::before { content: "\f2ee"; }
@@ -634,6 +735,7 @@ a.ch-row:hover { background: var(--sky); border-color: rgba(var(--primary-rgb), 
 .bi-mortarboard::before { content: "\f6fe"; }
 .bi-mouse::before { content: "\f499"; }
 .bi-music-note-beamed::before { content: "\f49e"; }
+.bi-music-player::before { content: "\f4a2"; }
 .bi-palette::before { content: "\f4b1"; }
 .bi-palette2::before { content: "\f4b2"; }
 .bi-patch-check-fill::before { content: "\f4b5"; }
@@ -705,6 +807,8 @@ a.ch-row:hover { background: var(--sky); border-color: rgba(var(--primary-rgb), 
 .bi-upload::before { content: "\f603"; }
 .bi-vector-pen::before { content: "\f604"; }
 .bi-vimeo::before { content: "\f66a"; }
+.bi-volume-mute-fill::before { content: "\f60c"; }
+.bi-volume-up-fill::before { content: "\f610"; }
 .bi-wechat::before { content: "\f829"; }
 .bi-whatsapp::before { content: "\f618"; }
 .bi-wifi::before { content: "\f61c"; }

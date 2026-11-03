@@ -126,7 +126,7 @@
       <div class="hero-media" style="animation:fadeUp .6s .08s var(--ease) both">
         <div class="hero-blob" aria-hidden="true"></div>
         <div class="hero-photo">${photo
-          ? `<img src="${esc(photo)}" alt="Foto ${esc(p.nama_lengkap || '')}" fetchpriority="high" decoding="async" referrerpolicy="no-referrer" width="440" height="550">`
+          ? `<img src="${esc(photo)}" alt="Photo of ${esc(p.nama_lengkap || '')}" fetchpriority="high" decoding="async" referrerpolicy="no-referrer" width="440" height="550">`
           : `<span class="initials" aria-hidden="true">${esc(initials(p.nama_lengkap))}</span>`}</div>
         <i class="bi bi-stars hero-spark" aria-hidden="true"></i>
         <i class="bi bi-star-fill hero-spark-2" aria-hidden="true"></i>
@@ -188,8 +188,8 @@
         <div class="skill-top"><span class="ic"><i class="bi bi-${icon(x.ikon)}" aria-hidden="true"></i></span><span class="chip ${catClass(String(x.kategori), cats)}">${esc(x.kategori)}</span></div>
         <h3>${esc(x.nama_skill)}</h3>
         <p>${esc(x.deskripsi || '')}</p>
-        <div class="bar" role="progressbar" aria-label="Tingkat kemahiran ${esc(x.nama_skill)}" aria-valuemin="0" aria-valuemax="100" aria-valuenow="${lv}"><span style="--w:${lv}%"></span></div>
-        <div class="skill-meta"><span>Kemahiran</span><b class="tnum">${lv}%</b></div>
+        <div class="bar" role="progressbar" aria-label="Proficiency in ${esc(x.nama_skill)}" aria-valuemin="0" aria-valuemax="100" aria-valuenow="${lv}"><span style="--w:${lv}%"></span></div>
+        <div class="skill-meta"><span>Proficiency</span><b class="tnum">${lv}%</b></div>
       </article>`;
     }).join('') : `<div class="empty" style="grid-column:1/-1"><i class="bi bi-stars"></i>No expertise in this category yet.</div>`;
   }
@@ -217,10 +217,11 @@
       const link = safeUrl(x.url_tautan);
       const tech = String(x.teknologi || '').split(',').map((t) => t.trim()).filter(Boolean).slice(0, 4);
       return `<article class="card proj-card lift reveal in" style="--d:${((i % 3) * 0.05).toFixed(2)}s">
-        <div class="proj-cover">
-          ${img ? `<img src="${esc(img)}" alt="Tampilan proyek ${esc(x.judul)}" loading="lazy" decoding="async" referrerpolicy="no-referrer" width="640" height="400">`
+        <div class="proj-cover" data-popen="${esc(x.id)}" role="button" tabindex="0" aria-label="View details: ${esc(x.judul)}">
+          ${img ? `<img src="${esc(img)}" alt="Preview of ${esc(x.judul)}" loading="lazy" decoding="async" referrerpolicy="no-referrer" width="640" height="360">`
                 : `<div class="ph" aria-hidden="true"><i class="bi bi-window-stack"></i><b>${esc(x.kategori)}</b></div>`}
           <span class="proj-tag">${esc(x.kategori)}</span>
+          <span class="zoom" aria-hidden="true"><i class="bi bi-arrows-angle-expand"></i></span>
         </div>
         <div class="proj-body">
           <h3>${esc(x.judul)}</h3>
@@ -228,14 +229,14 @@
           ${tech.length ? `<div class="tag-row">${tech.map((t) => `<span class="chip">${esc(t)}</span>`).join('')}</div>` : ''}
           <div class="proj-foot">
             <small>${x.periode ? 'Completed • ' + esc(x.periode) : esc(x.kategori)}</small>
-            ${link ? `<a class="proj-go" href="${esc(link)}" target="_blank" rel="noopener" data-proj="${esc(x.judul)}" aria-label="Buka proyek ${esc(x.judul)} (tab baru)"><i class="bi bi-arrow-up-right" aria-hidden="true"></i></a>`
+            ${link ? `<a class="proj-go" href="${esc(link)}" target="_blank" rel="noopener" data-proj="${esc(x.judul)}" aria-label="Open project ${esc(x.judul)} (new tab)"><i class="bi bi-arrow-up-right" aria-hidden="true"></i></a>`
                    : `<span class="proj-go off" aria-hidden="true"><i class="bi bi-lock"></i></span>`}
           </div>
         </div>
       </article>`;
     }).join('') : `<div class="empty" style="grid-column:1/-1"><i class="bi bi-folder2-open"></i>No projects in this category yet.</div>`;
     $('#projDots').innerHTML = pages > 1 ? Array.from({ length: pages }, (_, i) =>
-      `<button type="button" data-projpage="${i}" aria-label="Halaman ${i + 1}" aria-current="${i === S.projPage}"></button>`).join('') : '';
+      `<button type="button" data-projpage="${i}" aria-label="Page ${i + 1}" aria-current="${i === S.projPage}"></button>`).join('') : '';
     $('#projPrev').disabled = S.projPage <= 0;
     $('#projNext').disabled = S.projPage >= pages - 1;
     $('.port-arrows').hidden = pages <= 1;
@@ -250,19 +251,16 @@
     const s = set();
     const list = D().testimoni || [];
     const sec = $('#testimoni');
+    stopTestiRotation();
     sec.hidden = !list.length;
     if (!list.length) return;
     $('#subTestimoni').textContent = String(s.sub_testimoni || '').replace(/^'/, '');
-    $('#testiBox').innerHTML = list.map((t, i) => {
-      const foto = safeUrl(t.url_foto);
-      return `<figure class="card testi-card reveal" style="margin:0;--d:${((i % 3) * 0.06).toFixed(2)}s">
-        <i class="bi bi-quote q" aria-hidden="true"></i>
-        <div class="stars" role="img" aria-label="Rating ${parseInt(t.rating, 10) || 5} dari 5">${stars(t.rating)}</div>
-        <blockquote>“${esc(t.isi)}”</blockquote>
-        <figcaption class="author"><span class="avatar">${foto ? `<img src="${esc(foto)}" alt="" loading="lazy" referrerpolicy="no-referrer">` : esc(initials(t.nama))}</span>
-          <span><b>${esc(t.nama)}</b><small>${esc(t.jabatan_instansi || '')}</small></span></figcaption>
-      </figure>`;
-    }).join('');
+    if (list.length > 4) { renderTestiFlip(list); return; }
+    const box = $('#testiBox');
+    box.className = 'testi-track';
+    box.setAttribute('tabindex', '0');
+    box.style.removeProperty('--slots');
+    box.innerHTML = list.map((t, i) => testiCard(t, i, ' reveal', `margin:0;--d:${((i % 3) * 0.06).toFixed(2)}s`)).join('');
     requestAnimationFrame(updateTestiNav);
   }
 
@@ -404,7 +402,7 @@
       if (cta) track('klik_cta', cta.getAttribute('data-cta'));
       if (kon) track('klik_kontak', kon.getAttribute('data-kontak'));
       if (proj) track('klik_proyek', proj.getAttribute('data-proj'));
-      if (go) { e.preventDefault(); scrollToSection(go.getAttribute('data-go')); return; }
+      if (go) { e.preventDefault(); closePopups(); scrollToSection(go.getAttribute('data-go')); return; }
       if (t.closest('[data-focus-form]')) { focusForm(); return; }
       const sc = t.closest('[data-skillcat]');
       if (sc) { S.skillCat = sc.getAttribute('data-skillcat'); renderSkills(); markIn('#skillsBox'); return; }
@@ -670,6 +668,337 @@
   }
 
   // ════════════════════════════════════════════════════════
+  // BAGIAN 9 (v2.1): POPUP PROYEK · TESTIMONI FLIP · MUSIK LATAR · LEBAH
+  // ════════════════════════════════════════════════════════
+  let modalReturn = null;
+  function openModal(sel) {
+    modalReturn = document.activeElement;
+    $(sel).classList.add('open');
+    document.body.style.overflow = 'hidden';
+    setTimeout(() => { const b = $(sel + ' .modal-head .icon-btn'); if (b) b.focus(); }, 50);
+  }
+  function closeModal(sel) {
+    const m = $(sel);
+    if (!m || !m.classList.contains('open')) return false;
+    m.classList.remove('open');
+    if (!$('.modal.open')) document.body.style.overflow = '';
+    if (modalReturn && document.body.contains(modalReturn)) modalReturn.focus({ preventScroll: true });
+    return true;
+  }
+  const closePopups = () => { closeModal('#projModal'); closeModal('#testiModal'); };
+
+  /** Poin 3: klik gambar proyek → popup gambar penuh + deskripsi + tombol CTA menyala. */
+  function openProject(id) {
+    const x = (D().portofolio || []).find((p) => String(p.id) === String(id));
+    if (!x) return;
+    const img = safeUrl(x.url_gambar);
+    const link = safeUrl(x.url_tautan);
+    const tech = String(x.teknologi || '').split(',').map((t) => t.trim()).filter(Boolean);
+    $('#pmBody').innerHTML = `
+      <div class="pm-media">${img
+        ? `<img src="${esc(img)}" alt="${esc(x.judul)}" decoding="async" referrerpolicy="no-referrer">`
+        : '<div class="ph" aria-hidden="true"><i class="bi bi-window-stack"></i></div>'}</div>
+      <div class="pm-text">
+        <div class="pm-meta"><span class="chip chip-sky">${esc(x.kategori)}</span>${x.periode ? `<span class="chip">Completed • ${esc(x.periode)}</span>` : ''}</div>
+        <h3 id="pmTitle">${esc(x.judul)}</h3>
+        ${x.deskripsi_singkat ? `<p>${esc(x.deskripsi_singkat)}</p>` : ''}
+        ${tech.length ? `<div class="tag-row">${tech.map((t) => `<span class="chip">${esc(t)}</span>`).join('')}</div>` : ''}
+        <div class="pm-cta">
+          ${link ? `<a class="btn btn-yellow btn-glow" href="${esc(link)}" target="_blank" rel="noopener" data-cta="Lihat Proyek (popup)">View Project <i class="bi bi-arrow-up-right" aria-hidden="true"></i></a>` : ''}
+          <button type="button" class="btn ${link ? 'btn-ghost' : 'btn-yellow btn-glow'}" data-go="kontak" data-cta="Diskusikan Proyek (popup)">${link ? 'Discuss a Similar Project' : 'Discuss This Project'} <i class="bi bi-chat-square-text" aria-hidden="true"></i></button>
+        </div>
+      </div>`;
+    openModal('#projModal');
+    track('klik_proyek', x.judul);
+  }
+
+  /** Poin 5: kartu testimoni (klik → popup). */
+  function testiCard(t, i, cls, style) {
+    const foto = safeUrl(t.url_foto);
+    const n = parseInt(t.rating, 10) || 5;
+    return `<figure class="card testi-card${cls || ''}" data-tidx="${i}" tabindex="0" role="button" aria-label="Read the full testimonial from ${esc(t.nama)}" style="${style || 'margin:0'}">
+        <i class="bi bi-quote q" aria-hidden="true"></i>
+        <div class="stars" role="img" aria-label="Rating ${n} out of 5">${stars(t.rating)}</div>
+        <blockquote>“${esc(t.isi)}”</blockquote>
+        <figcaption class="author"><span class="avatar">${foto ? `<img src="${esc(foto)}" alt="" loading="lazy" referrerpolicy="no-referrer">` : esc(initials(t.nama))}</span>
+          <span><b>${esc(t.nama)}</b><small>${esc(t.jabatan_instansi || '')}</small></span></figcaption>
+        <span class="testi-more">Read more <i class="bi bi-arrow-right" aria-hidden="true"></i></span>
+      </figure>`;
+  }
+
+  function openTesti(i) {
+    const t = (D().testimoni || [])[i];
+    if (!t) return;
+    const foto = safeUrl(t.url_foto);
+    $('#tmBody').innerHTML = `<i class="bi bi-quote q" aria-hidden="true"></i>
+      <div class="stars" role="img" aria-label="Rating ${parseInt(t.rating, 10) || 5} out of 5">${stars(t.rating)}</div>
+      <blockquote>“${esc(t.isi)}”</blockquote>
+      <figcaption class="author"><span class="avatar">${foto ? `<img src="${esc(foto)}" alt="" referrerpolicy="no-referrer">` : esc(initials(t.nama))}</span>
+        <span><b>${esc(t.nama)}</b><small>${esc(t.jabatan_instansi || '')}</small></span></figcaption>`;
+    openModal('#testiModal');
+  }
+
+  // Lebih dari 4 testimoni → kartu berganti satu per satu dengan efek flip.
+  let testiTimer = null;
+  let testiState = null;
+  const testiSlots = () => (window.innerWidth >= 1000 ? 4 : window.innerWidth >= 700 ? 2 : 1);
+  function stopTestiRotation() { clearInterval(testiTimer); testiTimer = null; testiState = null; }
+
+  function renderTestiFlip(list) {
+    const box = $('#testiBox');
+    const n = Math.min(testiSlots(), list.length - 1);
+    box.className = 'testi-flip';
+    box.removeAttribute('tabindex');
+    box.style.setProperty('--slots', n);
+    box.innerHTML = Array.from({ length: n }, (_, s) =>
+      `<div class="flip"><div class="flip-inner"><div class="face front">${testiCard(list[s], s)}</div><div class="face back" aria-hidden="true"></div></div></div>`).join('');
+    testiState = { n, shown: Array.from({ length: n }, (_, s) => s), queue: list.map((_, i) => i).slice(n), slot: 0 };
+    $('#testiNav').hidden = true;
+    testiTimer = setInterval(rotateTesti, 4500);
+  }
+
+  function rotateTesti() {
+    const st = testiState;
+    const list = (S.data && D().testimoni) || [];
+    if (!st || !st.queue.length || document.hidden) return;
+    const box = $('#testiBox');
+    // Jeda saat pengunjung sedang membaca (kursor/fokus di kartu) atau popup terbuka
+    if (box.matches(':hover') || box.contains(document.activeElement) || $('#testiModal.open')) return;
+    const s = st.slot % st.n; st.slot += 1;
+    const inner = box.children[s] && box.children[s].firstElementChild;
+    if (!inner) return;
+    const flipped = inner.classList.contains('flipped');
+    const hidden = $(flipped ? '.face.front' : '.face.back', inner);
+    const visible = $(flipped ? '.face.back' : '.face.front', inner);
+    const next = st.queue.shift();
+    st.queue.push(st.shown[s]);
+    st.shown[s] = next;
+    hidden.innerHTML = testiCard(list[next], next);
+    hidden.removeAttribute('aria-hidden');
+    visible.setAttribute('aria-hidden', 'true');
+    $$('[tabindex]', visible).forEach((el) => { el.tabIndex = -1; });
+    inner.classList.toggle('flipped');
+  }
+
+  let lastSlots = testiSlots();
+  window.addEventListener('resize', () => {
+    const n = testiSlots();
+    if (n !== lastSlots) { lastSlots = n; if (S.data && (D().testimoni || []).length > 4) renderTestimonials(); }
+  });
+
+  /** Poin 6: musik latar dari YouTube. Pemutar mini SELALU terlihat saat musik berbunyi
+   *  (aturan YouTube: pemutar tidak boleh disembunyikan; iklan tidak diblokir). */
+  function ytId(u) {
+    const m = /(?:youtube\.com\/(?:watch\?(?:[^#]*&)?v=|embed\/|shorts\/|live\/)|youtu\.be\/)([\w-]{11})/i.exec(String(u || ''));
+    return m ? m[1] : '';
+  }
+  const Music = {
+    id: '', player: null, ready: false, wantPlay: false, el: null,
+    muted: ls.get('music-muted', false) === true,
+    init(url) {
+      const id = ytId(url);
+      if (id === this.id) return;
+      this.teardown();
+      this.id = id;
+      if (!id) return;
+      this.el = document.createElement('div');
+      this.el.className = 'music';
+      this.el.id = 'music';
+      document.body.appendChild(this.el);
+      this.el.addEventListener('click', (e) => this.onClick(e));
+      const closedBefore = PF.ssn.get('music-closed') === id;
+      // Layar kecil (HP): pemutar 200×200 akan menutupi konten → tunggu pengunjung menekan tombol musik.
+      const small = window.innerWidth < 600;
+      this.renderPill(!closedBefore);
+      if (!closedBefore && !small) {
+        // Browser hanya mengizinkan suara setelah interaksi pertama pengunjung.
+        // Dimulai SETELAH klik itu selesai, agar klik pertama tetap mengenai tombol/gambar yang dituju.
+        this.onGesture = (e) => {
+          if (this.el && this.el.contains(e.target)) return;
+          this.removeGesture();
+          setTimeout(() => this.start(), 0);
+        };
+        ['click', 'keydown'].forEach((ev) => document.addEventListener(ev, this.onGesture, { capture: true, passive: true }));
+      }
+    },
+    removeGesture() {
+      if (!this.onGesture) return;
+      ['click', 'keydown'].forEach((ev) => document.removeEventListener(ev, this.onGesture, { capture: true }));
+      this.onGesture = null;
+    },
+    teardown() {
+      this.removeGesture();
+      try { if (this.player && this.player.destroy) this.player.destroy(); } catch (e) { /* abaikan */ }
+      if (this.el) this.el.remove();
+      this.el = null; this.player = null; this.ready = false; this.id = '';
+    },
+    renderPill(waiting) {
+      if (this.panel) this.panel.hidden = true;
+      let pill = $('#musicPlay', this.el);
+      if (!pill) {
+        this.el.insertAdjacentHTML('afterbegin', '<button type="button" class="music-pill" id="musicPlay" aria-label="Play background music"><span class="ic"><i class="bi bi-music-note-beamed" aria-hidden="true"></i></span><span>Play music</span></button>');
+        pill = $('#musicPlay', this.el);
+      }
+      pill.hidden = false;
+      pill.classList.toggle('wait', !!waiting);
+    },
+    renderPanel() {
+      const pill = $('#musicPlay', this.el);
+      if (pill) pill.hidden = true;
+      if (!this.panel) {
+        this.el.insertAdjacentHTML('beforeend', `<div class="music-panel" role="region" aria-label="Background music">
+          <div class="music-top"><b><span class="eq" id="musicEq"><i></i><i></i><i></i></span>Music</b>
+            <button type="button" id="musicMute"></button>
+            <button type="button" id="musicMin" aria-label="Hide player and pause music" title="Hide (pauses music)"><i class="bi bi-dash-lg" aria-hidden="true"></i></button></div>
+          <div class="music-player"><div id="musicYT"></div></div></div>`);
+        this.panel = $('.music-panel', this.el);
+      }
+      this.panel.hidden = false;
+      this.syncMute();
+    },
+    syncMute() {
+      const b = $('#musicMute', this.el);
+      if (!b) return;
+      b.innerHTML = `<i class="bi bi-volume-${this.muted ? 'mute' : 'up'}-fill" aria-hidden="true"></i>`;
+      b.setAttribute('aria-label', this.muted ? 'Unmute music' : 'Mute music');
+      b.setAttribute('aria-pressed', String(this.muted));
+      const eq = $('#musicEq', this.el); if (eq) eq.classList.toggle('off', this.muted || !this.playing);
+    },
+    start() {
+      this.wantPlay = true;
+      this.renderPanel();
+      if (this.player) { if (this.ready) this.player.playVideo(); return; }
+      PF.loadScript('https://www.youtube.com/iframe_api').catch(() => {});
+      const make = () => {
+        if (!this.el || this.player) return;
+        this.player = new window.YT.Player('musicYT', {
+          width: 200, height: 200, videoId: this.id,
+          playerVars: { autoplay: 1, loop: 1, playlist: this.id, controls: 1, playsinline: 1, rel: 0 },
+          events: {
+            onReady: (e) => { this.ready = true; if (this.muted) e.target.mute(); if (this.wantPlay) e.target.playVideo(); },
+            onStateChange: (e) => { this.playing = e.data === 1; this.syncMute(); }
+          }
+        });
+      };
+      if (window.YT && window.YT.Player) make();
+      else {
+        const prev = window.onYouTubeIframeAPIReady;
+        window.onYouTubeIframeAPIReady = () => { if (prev) try { prev(); } catch (e) { /* abaikan */ } make(); };
+      }
+    },
+    onClick(e) {
+      if (e.target.closest('#musicPlay')) { this.removeGesture(); PF.ssn.set('music-closed', ''); this.start(); return; }
+      if (e.target.closest('#musicMute')) {
+        this.muted = !this.muted; ls.set('music-muted', this.muted);
+        if (this.ready) { if (this.muted) this.player.mute(); else this.player.unMute(); }
+        this.syncMute(); return;
+      }
+      if (e.target.closest('#musicMin')) {
+        // Pemutar disembunyikan → musik WAJIB berhenti (tidak boleh berbunyi tanpa pemutar terlihat)
+        this.wantPlay = false;
+        if (this.ready) this.player.pauseVideo();
+        PF.ssn.set('music-closed', this.id);
+        this.renderPill(false);
+        const p = $('#musicPlay', this.el); if (p) p.focus();
+      }
+    }
+  };
+
+  /** Poin 7: lebah yang mengikuti kursor dan menghampiri saat kursor berhenti. */
+  const BEE_SVG = `<svg viewBox="0 0 64 64" aria-hidden="true">
+    <defs><clipPath id="beeBody"><ellipse cx="30" cy="38" rx="19" ry="13"/></clipPath></defs>
+    <ellipse class="wing" cx="27" cy="17" rx="8" ry="13" fill="#E6F4FF" fill-opacity=".9" stroke="#8EC3EE" stroke-width="1.5"/>
+    <ellipse class="wing w2" cx="37" cy="19" rx="7" ry="11" fill="#F2F9FF" fill-opacity=".9" stroke="#8EC3EE" stroke-width="1.5"/>
+    <path d="M12 36 L3 38.5 L12 41 Z" fill="#0B1F3A"/>
+    <ellipse cx="30" cy="38" rx="19" ry="13" fill="#FFC300"/>
+    <g clip-path="url(#beeBody)" fill="#0B1F3A"><rect x="19" y="20" width="5" height="40"/><rect x="29" y="20" width="5" height="40"/><rect x="39" y="20" width="4" height="40"/></g>
+    <ellipse cx="30" cy="38" rx="19" ry="13" fill="none" stroke="#0B1F3A" stroke-width="2"/>
+    <circle cx="50" cy="34" r="9" fill="#0B1F3A"/>
+    <circle cx="53" cy="31.5" r="2.6" fill="#fff"/><circle cx="53.8" cy="31.5" r="1.2" fill="#0B1F3A"/>
+    <path d="M50 26 Q50 18 45 15 M54 26 Q57 18 61 17" stroke="#0B1F3A" stroke-width="2" fill="none" stroke-linecap="round"/>
+  </svg>`;
+  const Bee = {
+    on: false, el: null, raf: 0,
+    x: 0, y: 0, mx: null, my: null, last: 0, face: 1,
+    init(enabled) {
+      const ok = enabled !== false && !reduceMotion && window.matchMedia && matchMedia('(hover: hover) and (pointer: fine)').matches;
+      if (ok && !this.on) this.start();
+      else if (!ok && this.on) this.stop();
+    },
+    start() {
+      this.on = true;
+      this.el = document.createElement('div');
+      this.el.className = 'bee';
+      this.el.setAttribute('aria-hidden', 'true');
+      this.el.innerHTML = BEE_SVG;
+      document.body.appendChild(this.el);
+      this.x = window.innerWidth - 90; this.y = 140;
+      this.onMove = (e) => { this.mx = e.clientX; this.my = e.clientY; this.last = performance.now(); };
+      this.onVis = () => { if (document.hidden) cancelAnimationFrame(this.raf); else this.loop(); };
+      window.addEventListener('mousemove', this.onMove, { passive: true });
+      document.addEventListener('visibilitychange', this.onVis);
+      this.loop();
+    },
+    stop() {
+      this.on = false;
+      cancelAnimationFrame(this.raf);
+      window.removeEventListener('mousemove', this.onMove);
+      document.removeEventListener('visibilitychange', this.onVis);
+      if (this.el) this.el.remove();
+      this.el = null;
+    },
+    loop() {
+      cancelAnimationFrame(this.raf);
+      const step = (t) => {
+        if (!this.on) return;
+        const px = this.x;
+        let tx, ty, k;
+        if (this.mx === null) {                       // belum ada kursor: melayang santai
+          tx = window.innerWidth - 90 + Math.cos(t / 900) * 30; ty = 140 + Math.sin(t / 700) * 20; k = 0.03;
+        } else if (t - this.last > 450) {             // kursor berhenti: lebah menghampiri & berputar kecil
+          tx = this.mx + 22 + Math.cos(t / 380) * 12; ty = this.my - 26 + Math.sin(t / 290) * 9; k = 0.075;
+        } else {                                      // kursor bergerak: mengikuti dari belakang
+          tx = this.mx - 44; ty = this.my - 30; k = 0.035;
+        }
+        this.x += (tx - this.x) * k;
+        this.y += (ty - this.y) * k;
+        const vx = this.x - px;
+        if (vx > 0.35) this.face = 1; else if (vx < -0.35) this.face = -1;
+        const tilt = Math.max(-18, Math.min(18, vx * 3));
+        const bob = Math.sin(t / 110) * 1.8;
+        this.el.style.transform = `translate3d(${(this.x - 23).toFixed(1)}px, ${(this.y - 23 + bob).toFixed(1)}px, 0) rotate(${tilt.toFixed(1)}deg) scaleX(${this.face})`;
+        this.raf = requestAnimationFrame(step);
+      };
+      this.raf = requestAnimationFrame(step);
+    }
+  };
+
+  /** Dipanggil setiap data tampil (idempoten): menyalakan/mematikan fitur sesuai Pengaturan. */
+  function initExtras(s) {
+    Music.init(s.musik_youtube);
+    Bee.init(s.animasi_lebah);
+  }
+
+  function bindExtras() {
+    document.addEventListener('click', (e) => {
+      const t = e.target;
+      if (t.closest('[data-close-pm]') || t.id === 'projModal') { closeModal('#projModal'); return; }
+      if (t.closest('[data-close-tm]') || t.id === 'testiModal') { closeModal('#testiModal'); return; }
+      const pc = t.closest('[data-popen]');
+      if (pc && !t.closest('.proj-go')) { openProject(pc.getAttribute('data-popen')); return; }
+      const tc = t.closest('[data-tidx]');
+      if (tc && !t.closest('.modal')) { openTesti(parseInt(tc.getAttribute('data-tidx'), 10)); }
+    });
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') { closePopups(); return; }
+      if ((e.key === 'Enter' || e.key === ' ') && e.target.matches && e.target.matches('[data-popen], [data-tidx]')) {
+        e.preventDefault();
+        e.target.click();
+      }
+    });
+  }
+
+  // ════════════════════════════════════════════════════════
   // BAGIAN 7: MEMUAT DATA (cache → Turbo → server, tanpa layar kosong)
   // ════════════════════════════════════════════════════════
   /** Tampilkan data. Render hanya jika hash berbeda dari yang sedang tampil. */
@@ -685,6 +1014,7 @@
     hideState();
     renderAll();
     document.body.classList.remove('is-loading');
+    initExtras(data.settings);
     if (!S.started) {
       S.started = true;
       initReveal();
@@ -756,9 +1086,10 @@
     if (S.data && PF.configured && hiddenAt && Date.now() - hiddenAt > 10 * 60000) PF.apiGet({ action: 'public', h: S.h }, { tries: 1 }).then(onServer).catch(() => {});
   });
 
-  // Ganti tampilan proyek: dipakai PF.Perf untuk diagnosis di Console
+  // Akses diagnosis di Console (mis. PFApp.state)
   window.PFApp = { state: S, reload: fetchFromServer };
 
   bindUI();
+  bindExtras();
   load();
 })();

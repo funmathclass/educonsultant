@@ -16,6 +16,7 @@
   <link rel="preconnect" href="https://script.google.com" crossorigin>
   <link rel="preconnect" href="https://script.googleusercontent.com" crossorigin>
   <link rel="dns-prefetch" href="https://lh3.googleusercontent.com">
+  <link rel="dns-prefetch" href="https://www.youtube.com">
   <!-- Font di-host sendiri (tanpa Google Fonts) → teks tampil tanpa menunggu server lain -->
   <link rel="preload" href="fonts/pjs-400.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="preload" href="fonts/pjs-800.woff2" as="font" type="font/woff2" crossorigin>
@@ -236,6 +237,22 @@
     <div class="modal-box">
       <div class="modal-head"><span>Introduction Video</span><button class="icon-btn" data-close-modal aria-label="Close video"><i class="bi bi-x-lg" aria-hidden="true"></i></button></div>
       <div class="video-wrap" id="videoWrap"></div>
+    </div>
+  </div>
+
+  <!-- Popup detail proyek (klik gambar portofolio) -->
+  <div class="modal pmodal" id="projModal" role="dialog" aria-modal="true" aria-labelledby="pmTitle">
+    <div class="modal-box">
+      <div class="modal-head"><span>Project Details</span><button class="icon-btn" data-close-pm aria-label="Close project details"><i class="bi bi-x-lg" aria-hidden="true"></i></button></div>
+      <div class="pm-body" id="pmBody"></div>
+    </div>
+  </div>
+
+  <!-- Popup testimoni (klik kartu testimoni) -->
+  <div class="modal tmodal" id="testiModal" role="dialog" aria-modal="true" aria-label="Testimonial">
+    <div class="modal-box">
+      <div class="modal-head"><span>Testimonial</span><button class="icon-btn" data-close-tm aria-label="Close testimonial"><i class="bi bi-x-lg" aria-hidden="true"></i></button></div>
+      <div class="tm-body" id="tmBody"></div>
     </div>
   </div>
 

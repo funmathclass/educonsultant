@@ -885,7 +885,7 @@
         { k: 'url_tautan', l: 'URL tautan proyek', t: 'url', max: 500, ph: 'https:\/\/…' },
         { k: 'deskripsi_singkat', l: 'Deskripsi singkat', t: 'textarea', max: 300, full: 1 },
         { k: 'teknologi', l: 'Teknologi', max: 200, full: 1, ph: 'React, Tailwind, Storybook', hint: 'Pisahkan dengan koma. Maksimal 4 yang tampil.' },
-        { k: 'url_gambar', l: 'Gambar sampul', t: 'image', kind: 'proyek', full: 1 },
+        { k: 'url_gambar', l: 'Gambar sampul', t: 'image', kind: 'proyek', full: 1, hint: 'Gunakan gambar landscape 16:9 (mis. 1600×900 px) agar tampil penuh di kartu dan popup.' },
         { k: 'tampil', l: 'Tampilkan di situs', t: 'switch', full: 1 }
       ],
       vis: (r) => `<span class="row-vis">${safeUrl(r.url_gambar) ? `<img src="${esc(r.url_gambar)}" alt="" loading="lazy" referrerpolicy="no-referrer">` : '<i class="bi bi-window-stack" aria-hidden="true"></i>'}</span>`,
@@ -1463,6 +1463,7 @@
 
   function renderPengaturan() {
     if (!A.ui.set) A.ui.set = Object.assign({}, A.d.settings);
+    if (A.ui.set.animasi_lebah === undefined) A.ui.set.animasi_lebah = true;
     const s = A.ui.set; const m = A.d.meta;
     const cur = String(s.warna_utama || '#2563EB').toUpperCase();
     const isPreset = SWATCHES.some(([, h]) => h === cur);
@@ -1480,6 +1481,10 @@
           <div style="margin-top:16px">${setSwitch('info_bar_aktif', 'Bilah info atas', 'Tampilkan email, telepon, dan waktu respons di atas navbar.')}</div>
           ${setField('info_bar_teks', 'Teks waktu respons', { max: 80, ph: 'Balas pesan dalam < 24 jam' })}
           ${setField('status_tersedia', 'Status ketersediaan', { max: 80, ph: 'Tersedia untuk proyek Q4 2026', hint: 'Tampil di kartu kontak dan footer.' })}
+        </div>
+        <div class="panel"><div class="panel-head"><div><h2><i class="bi bi-music-note-beamed" style="color:var(--primary)"></i> Musik Latar & Animasi</h2><p>Suasana halaman untuk pengunjung</p></div></div>
+          ${setField('musik_youtube', 'Musik latar (tautan video YouTube)', { type: 'url', max: 300, ph: 'https://youtu.be/xxxxxxxxxxx', hint: 'Kosongkan untuk mematikan. Musik mulai setelah pengunjung pertama kali mengklik/menyentuh halaman (aturan browser). Pemutar mini tetap terlihat di pojok kiri bawah sesuai aturan YouTube; pengunjung bisa mematikan suara atau menyembunyikannya. Iklan YouTube tidak diblokir.' })}
+          ${setSwitch('animasi_lebah', 'Lebah interaktif', 'Lebah kecil mengikuti kursor dan menghampiri saat kursor berhenti. Hanya di komputer/laptop; otomatis mati di HP dan bagi pengunjung yang memilih kurangi animasi.')}
         </div>
         <div class="panel"><div class="panel-head"><div><h2><i class="bi bi-envelope-paper" style="color:var(--primary)"></i> Notifikasi Email</h2><p>Penerusan pesan masuk</p></div></div>
           ${setField('email_notifikasi', 'Email penerima notifikasi', { type: 'email', max: 150, ph: m.adminEmail || 'email@domain.com', hint: 'Kosongkan untuk memakai ADMIN_EMAIL. Setiap pesan formulir kontak dikirim ke alamat ini.' })}
@@ -1547,6 +1552,7 @@
     const s = Object.assign({}, A.ui.set);
     const errs = {};
     ['email_publik', 'email_notifikasi'].forEach((k) => { if (s[k] && !isEmail(s[k])) errs[k] = 'Format email belum benar.'; });
+    if (s.musik_youtube && !/^https:\/\/(?:www\.|m\.|music\.)?(?:youtube\.com\/(?:watch\?(?:[^#]*&)?v=|embed\/|shorts\/|live\/)|youtu\.be\/)[\w-]{11}/i.test(String(s.musik_youtube).trim())) errs.musik_youtube = 'Harus tautan video YouTube, contoh https://youtu.be/xxxxxxxxxxx';
     Object.keys(s).forEach((k) => { if (typeof s[k] === 'string' && MARKUP.test(s[k])) errs[k] = 'Tidak boleh berisi kode HTML.'; });
     if (!/^#[0-9a-f]{6}$/i.test(s.warna_utama || '')) errs.warna_utama = 'Warna tidak valid.';
     $$('#a-pengaturan .field').forEach((f) => showErr(f, errs[f.getAttribute('data-f')]));
