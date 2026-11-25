@@ -434,7 +434,7 @@
     let lastSize = projPageSize(); let rT;
     window.addEventListener('resize', () => {
       clearTimeout(rT);
-      rT = setTimeout(() => { S.device = deviceType(); updateTestiNav(); const sz = projPageSize(); if (sz !== lastSize) { lastSize = sz; S.projPage = 0; renderProjects(); } }, 150);
+      rT = setTimeout(() => { S.device = PF.deviceType(); updateTestiNav(); const sz = projPageSize(); if (sz !== lastSize) { lastSize = sz; S.projPage = 0; renderProjects(); } }, 150);
     });
     bindForm();
   }

@@ -6,7 +6,7 @@
  * - Permintaan ke Google Apps Script, YouTube, gambar Drive, dsb. TIDAK disentuh.
  * Naikkan VERSION setiap merilis pembaruan besar agar salinan lama dibuang.
  */
-const VERSION = 'pf-v2.2.0';
+const VERSION = 'pf-v2.2.1';
 const SHELL = [
   './', './index.html', './admin.html',
   './css/style.css', './css/admin.css',

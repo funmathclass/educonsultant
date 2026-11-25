@@ -227,7 +227,9 @@
     if (_scripts[src]) return _scripts[src];
     _scripts[src] = new Promise((resolve, reject) => {
       const s = document.createElement('script');
-      s.src = src; s.async = true; s.crossOrigin = 'anonymous';
+      s.src = src; s.async = true;
+      // crossOrigin hanya untuk CDN yang mengizinkan CORS (YouTube & Google tidak) — tanpa ini skrip mereka diblokir.
+      if (/^https:\/\/cdn\.jsdelivr\.net\//.test(src)) s.crossOrigin = 'anonymous';
       s.onload = () => resolve();
       s.onerror = () => { delete _scripts[src]; reject(new Error('Gagal memuat pustaka ' + src.split('/').pop() + '. Periksa koneksi internet.')); };
       document.head.appendChild(s);
