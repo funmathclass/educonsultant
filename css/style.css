@@ -577,6 +577,28 @@ body:has(.music-panel:not([hidden])) .toasts { bottom: 300px; }
   .testi-card:hover { transform: none; }
 }
 
+/* ══ PWA v2.2: tombol Pasang Aplikasi & panduan iPhone ══ */
+.pwa-install { position: fixed; left: 16px; bottom: calc(16px + env(safe-area-inset-bottom)); z-index: 130; display: inline-flex; align-items: center; gap: 4px; padding: 4px; border-radius: var(--pill); background: var(--white); box-shadow: 0 10px 28px rgba(11,31,58,.22); animation: pwaIn .35s var(--ease) both; }
+.pwa-install[hidden] { display: none; }
+.pwa-go { display: inline-flex; align-items: center; gap: 8px; min-height: 44px; padding: 0 16px; border: 0; border-radius: var(--pill); background: var(--navy); color: #fff; font: inherit; font-weight: 700; font-size: 14px; cursor: pointer; }
+.pwa-go:hover { background: #13305A; }
+.pwa-go i { color: var(--yellow); }
+.pwa-x { width: 36px; height: 36px; border: 0; border-radius: 50%; background: transparent; color: var(--slate); cursor: pointer; display: grid; place-items: center; }
+.pwa-x:hover { background: var(--chip); }
+.pwa-go:focus-visible, .pwa-x:focus-visible { outline: 3px solid var(--primary); outline-offset: 2px; }
+.adm-body .pwa-install { bottom: calc(84px + env(safe-area-inset-bottom)); }
+@media (min-width: 1024px) { .adm-body .pwa-install { bottom: 20px; left: auto; right: 20px; } }
+@keyframes pwaIn { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: none; } }
+.pwa-ios { position: fixed; inset: 0; z-index: 300; background: rgba(11,31,58,.55); display: grid; align-items: end; justify-items: center; padding: 16px; }
+.pwa-ios[hidden] { display: none; }
+.pwa-ios-box { width: min(420px, 100%); background: var(--white); border-radius: 22px; padding: 24px 22px 20px; text-align: center; box-shadow: 0 20px 50px rgba(11,31,58,.3); }
+.pwa-ios-box img { border-radius: 14px; display: block; margin: 0 auto; }
+.pwa-ios-box h3 { margin: 12px 0 8px; font-size: 19px; }
+.pwa-ios-box ol { text-align: left; margin: 0 0 18px; padding-left: 22px; color: var(--slate); line-height: 1.6; display: grid; gap: 6px; }
+.pwa-ios-box b { color: var(--navy); }
+.pwa-ios-box .btn { width: 100%; justify-content: center; }
+@media (prefers-reduced-motion: reduce) { .pwa-install { animation: none; } }
+
 /* ── Ikon Bootstrap (subset otomatis; ikon lain dimuat dari CDN bila dibutuhkan) ── */
 @font-face { font-display: block; font-family: "bootstrap-icons"; src: url(../fonts/bi.woff2) format("woff2"); }
 .bi::before, [class^="bi-"]::before, [class*=" bi-"]::before { display: inline-block; font-family: bootstrap-icons !important; font-style: normal; font-weight: normal !important; font-variant: normal; text-transform: none; line-height: 1; vertical-align: -.125em; -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; }
@@ -603,6 +625,7 @@ body:has(.music-panel:not([hidden])) .toasts { bottom: 300px; }
 .bi-book::before { content: "\f194"; }
 .bi-bootstrap::before { content: "\f1a8"; }
 .bi-box-arrow-left::before { content: "\f1c2"; }
+.bi-box-arrow-up::before { content: "\f1c6"; }
 .bi-box-arrow-up-right::before { content: "\f1c5"; }
 .bi-box-seam::before { content: "\f1c7"; }
 .bi-boxes::before { content: "\f685"; }

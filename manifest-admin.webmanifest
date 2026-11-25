@@ -1,0 +1,18 @@
+{
+  "id": "./admin.html",
+  "name": "Admin Portofolio",
+  "short_name": "Admin",
+  "description": "Dashboard admin untuk mengelola konten portofolio.",
+  "lang": "id",
+  "start_url": "./admin.html?source=pwa",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "any",
+  "background_color": "#F4F7FB",
+  "theme_color": "#0B1F3A",
+  "icons": [
+    { "src": "icons/admin-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any" },
+    { "src": "icons/admin-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any" },
+    { "src": "icons/admin-maskable-512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" }
+  ]
+}

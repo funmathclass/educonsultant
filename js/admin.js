@@ -219,6 +219,13 @@
     showLogin(null, null, q.pw === '1');
   }
 
+  // Aplikasi terpasang (PWA): login Google dibuka di tab browser terpisah. Begitu tab itu
+  // menyimpan sesi, aplikasi yang sedang menunggu di layar login ikut masuk otomatis.
+  window.addEventListener('storage', (e) => {
+    if (e.key !== 'pf2:' + SKEY || !e.newValue || A.token) return;
+    if (!$('#admLogin').hidden || !$('#admOut').hidden) location.replace(location.pathname);
+  });
+
   function noKey(title, msg) {
     screen('admNoKey');
     if (title) $('#noKeyTitle').textContent = title;
